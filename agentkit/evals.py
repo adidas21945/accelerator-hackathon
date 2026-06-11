@@ -41,19 +41,41 @@ class CheckResult(NamedTuple):
     evidence: str
 
 
-def section(output: str, name: str) -> str:
-    """Lines from the heading matching `name` to the next heading.
+_HEAD = re.compile(r"^\s{0,3}(?:(#{1,6})\s|\*\*[^*]+\*\*[:\s]*$|\d+\.\s+\*\*)")
 
-    A "heading" is a markdown #-line, a standalone **Bold** line, or a
-    numbered '1. **Bold**' item — covers the brief formats the skills mandate.
+
+def _head_level(line: str) -> int | None:
+    """Heading rank: 1-6 for #-headings, 9 for bold/numbered pseudo-headings."""
+    m = _HEAD.match(line)
+    if not m:
+        return None
+    return len(m.group(1)) if m.group(1) else 9
+
+
+def section(output: str, name: str) -> str:
+    """Lines from the heading matching `name` to the next peer heading.
+
+    Headings are #-lines, standalone **Bold** lines, or numbered '1. **Bold**'
+    items. A #-section ends only at a #-heading of the same or shallower
+    depth, so bold lines and deeper ### subsections INSIDE it don't truncate
+    it; a bold pseudo-heading section ends at the next heading of any kind.
     """
     lines = output.splitlines()
-    is_head = lambda ln: re.match(r"^\s{0,3}(#{1,6}\s|\*\*[^*]+\*\*[:\s]*$|\d+\.\s+\*\*)", ln)
     name_re = re.compile(re.escape(name), re.I)
-    start = next((i for i, ln in enumerate(lines) if is_head(ln) and name_re.search(ln)), None)
+    start = level = None
+    for i, ln in enumerate(lines):
+        lvl = _head_level(ln)
+        if lvl is not None and name_re.search(ln):
+            start, level = i, lvl
+            break
     if start is None:
         return ""
-    end = next((j for j in range(start + 1, len(lines)) if is_head(lines[j])), len(lines))
+    end = len(lines)
+    for j in range(start + 1, len(lines)):
+        lvl = _head_level(lines[j])
+        if lvl is not None and lvl <= level:
+            end = j
+            break
     return "\n".join(lines[start:end])
 
 
@@ -183,9 +205,13 @@ _FIXTURE = """# Civic Brief: Rodent Activity
 Rodent complaints rose 12% across Boston in the last 12 months.
 
 ## What we found
+**By neighborhood** — counts from the datastore.
 - Dorchester logged 1,204 cases.
 - Allston rose 18%.
 - South End fell 3%.
+
+### Methodology note
+Counts exclude duplicates.
 
 ## Caveats
 - The current month is incomplete.
@@ -197,7 +223,10 @@ SELECT neighborhood, count(*) FROM cases GROUP BY 1
 
 _SELFTEST = [  # (assertion, expected_ok)
     ({"type": "contains_section", "value": "Headline finding"}, True),
-    ({"type": "contains_section", "value": "Methodology"}, False),
+    ({"type": "contains_section", "value": "Missing section"}, False),
+    # bold lines and ### subsections inside a ## section must not truncate it:
+    ({"type": "regex", "value": r"1,204", "where": "What we found"}, True),
+    ({"type": "regex", "value": r"duplicates", "where": "What we found"}, True),
     ({"type": "regex", "value": r"data\.boston\.gov"}, False),
     ({"type": "regex", "value": r"SELECT", "where": "Reproduce it"}, True),
     ({"type": "not_regex", "value": r"TODO"}, True),

@@ -1,0 +1,3 @@
+- No peanuts in anything (allergy — hard constraint).
+- At least one dinner in any multi-day plan must be vegetarian.
+- Weeknights are busy: prefer dishes with <= 30 minutes hands-on time.

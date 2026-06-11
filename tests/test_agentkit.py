@@ -66,6 +66,12 @@ def test_section_extraction():
     assert section(OUT, "Nope") == ""
 
 
+def test_section_not_truncated_by_bold_or_subsections():
+    out = "## The plan\n**Day 1 — Stew** tasty\n**Day 2 — Soup** quick\n\n### Sub\ndetail\n\n## Next\nx\n"
+    sec = section(out, "The plan")
+    assert "Day 2" in sec and "detail" in sec and "Next" not in sec
+
+
 @pytest.mark.parametrize(
     "assertion,expected",
     [

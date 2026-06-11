@@ -1,0 +1,37 @@
+{
+  "skill": "skills/meal-plan",
+  "runs": ["with_skill", "without_skill"],
+  "cases": [
+    {
+      "id": "three-dinners",
+      "input": "I have chicken thighs, broccoli, and rice. Plan 3 dinners for 2 people.",
+      "assertions": [
+        {"type": "contains_section", "value": "The plan"},
+        {"type": "contains_section", "value": "Grocery list"},
+        {"type": "contains_section", "value": "Prep notes"},
+        {"type": "count_min", "pattern": "(?i)day\\s*\\d", "min": 3, "where": "The plan", "why": "three dinners were requested"},
+        {"type": "not_regex", "value": "(?i)olive oil|black pepper|soy sauce", "where": "Grocery list", "why": "pantry staples never go on the list"},
+        {"type": "numeric_present", "where": "Grocery list", "why": "purchasable quantities present"}
+      ]
+    },
+    {
+      "id": "vegetarian-hard-constraint",
+      "input": "Plan 2 vegetarian dinners for 4 people using mushrooms and lentils.",
+      "assertions": [
+        {"type": "contains_section", "value": "The plan"},
+        {"type": "not_regex", "value": "(?i)chicken|beef|pork|salmon|shrimp", "where": "The plan", "why": "vegetarian is a hard constraint"},
+        {"type": "regex", "value": "(?i)mushroom", "where": "The plan", "why": "named ingredient is used"},
+        {"type": "numeric_present", "where": "Grocery list"}
+      ]
+    },
+    {
+      "id": "diet-notes-respected",
+      "input": "I have ground beef and pasta. Plan 3 dinners for 2 people.",
+      "assertions": [
+        {"type": "contains_section", "value": "The plan"},
+        {"type": "regex", "value": "(?i)vegetarian|meat-?less|veggie", "where": "The plan", "why": "diet notes require one vegetarian dinner in any multi-day plan"},
+        {"type": "count_min", "pattern": "(?i)day\\s*\\d", "min": 3, "where": "The plan"}
+      ]
+    }
+  ]
+}

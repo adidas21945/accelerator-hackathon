@@ -1,0 +1,216 @@
+{
+  "project": "fridge-whisperer",
+  "provider": "local",
+  "model_hint": "",
+  "modes": {
+    "with_skill": {
+      "passed": 2,
+      "total": 3,
+      "pass_rate": 0.67,
+      "cost_usd": 0.0,
+      "latency_s_avg": 5.55
+    },
+    "without_skill": {
+      "passed": 0,
+      "total": 3,
+      "pass_rate": 0.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 10.12
+    }
+  },
+  "results": [
+    {
+      "case": "three-dinners",
+      "mode": "with_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'The plan': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Grocery list': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Prep notes': MISSING"
+        },
+        {
+          "type": "count_min",
+          "ok": true,
+          "evidence": "'(?i)day\\\\s*\\\\d' in section 'The plan': found 4, need >= 3"
+        },
+        {
+          "type": "not_regex",
+          "ok": false,
+          "evidence": "forbidden '(?i)olive oil|black pepper|soy sauce' in section 'Grocery list': matched 'Olive oil'"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Grocery list': present"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 5.29,
+      "output_path": "evals/outputs/three-dinners-with_skill.md"
+    },
+    {
+      "case": "three-dinners",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'The plan': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Grocery list': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Prep notes': MISSING"
+        },
+        {
+          "type": "count_min",
+          "ok": false,
+          "evidence": "'(?i)day\\\\s*\\\\d' in section 'The plan': found 0, need >= 3"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)olive oil|black pepper|soy sauce' in section 'Grocery list': absent (good)"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'Grocery list': MISSING"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 7.74,
+      "output_path": "evals/outputs/three-dinners-without_skill.md"
+    },
+    {
+      "case": "vegetarian-hard-constraint",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'The plan': present"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)chicken|beef|pork|salmon|shrimp' in section 'The plan': absent (good)"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)mushroom' in section 'The plan': found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Grocery list': present"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 6.45,
+      "output_path": "evals/outputs/vegetarian-hard-constraint-with_skill.md"
+    },
+    {
+      "case": "vegetarian-hard-constraint",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'The plan': MISSING"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)chicken|beef|pork|salmon|shrimp' in section 'The plan': absent (good)"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)mushroom' in section 'The plan': NOT found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'Grocery list': MISSING"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 10.94,
+      "output_path": "evals/outputs/vegetarian-hard-constraint-without_skill.md"
+    },
+    {
+      "case": "diet-notes-respected",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'The plan': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)vegetarian|meat-?less|veggie' in section 'The plan': found"
+        },
+        {
+          "type": "count_min",
+          "ok": true,
+          "evidence": "'(?i)day\\\\s*\\\\d' in section 'The plan': found 3, need >= 3"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 4.92,
+      "output_path": "evals/outputs/diet-notes-respected-with_skill.md"
+    },
+    {
+      "case": "diet-notes-respected",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'The plan': MISSING"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)vegetarian|meat-?less|veggie' in section 'The plan': NOT found"
+        },
+        {
+          "type": "count_min",
+          "ok": false,
+          "evidence": "'(?i)day\\\\s*\\\\d' in section 'The plan': found 0, need >= 3"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 11.69,
+      "output_path": "evals/outputs/diet-notes-respected-without_skill.md"
+    }
+  ],
+  "delta": {
+    "pass_rate": 0.67
+  }
+}
