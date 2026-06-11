@@ -72,6 +72,16 @@ def test_section_not_truncated_by_bold_or_subsections():
     assert "Day 2" in sec and "detail" in sec and "Next" not in sec
 
 
+def test_unicode_typography_normalized(tmp_path):
+    # granite-style narrow no-break space (U+202F) and non-breaking hyphen (U+2011)
+    out = "## Next 48 hours\nRain, 30 mph gusts\n\n## Go‑bag check\n- water\n"
+    assert "Rain" in section(out, "Next 48 hours")
+    got = check(out, {"type": "regex", "value": "30 mph", "where": "Next 48 hours"},
+                project_dir=tmp_path, case={"id": "t"})
+    assert got.ok, got.evidence
+    assert "water" in section(out, "Go-bag check")
+
+
 @pytest.mark.parametrize(
     "assertion,expected",
     [

@@ -41,6 +41,16 @@ class CheckResult(NamedTuple):
     evidence: str
 
 
+# Small local models love fancy typography: U+202F/U+00A0 no-break spaces and
+# U+2011 non-breaking hyphens look identical to humans but silently defeat
+# exact-string assertions. Fold them before matching.
+_TYPOGRAPHY = {0x202F: " ", 0x00A0: " ", 0x2011: "-"}
+
+
+def _normalize(text: str) -> str:
+    return text.translate(_TYPOGRAPHY)
+
+
 _HEAD = re.compile(r"^\s{0,3}(?:(#{1,6})\s|\*\*[^*]+\*\*[:\s]*$|\d+\.\s+\*\*)")
 
 
@@ -60,7 +70,7 @@ def section(output: str, name: str) -> str:
     depth, so bold lines and deeper ### subsections INSIDE it don't truncate
     it; a bold pseudo-heading section ends at the next heading of any kind.
     """
-    lines = output.splitlines()
+    lines = _normalize(output).splitlines()
     name_re = re.compile(re.escape(name), re.I)
     start = level = None
     for i, ln in enumerate(lines):
@@ -80,7 +90,13 @@ def section(output: str, name: str) -> str:
 
 
 def check(output: str, a: dict, *, project_dir: Path, case: dict) -> CheckResult:
-    """Evaluate one assertion against one output. Returns PASS/FAIL + evidence."""
+    """Evaluate one assertion against one output. Returns PASS/FAIL + evidence.
+
+    Note: `script` assertions receive the RAW (un-normalized) output on stdin —
+    scripts own their own robustness.
+    """
+    if a["type"] != "script":
+        output = _normalize(output)
     where = a.get("where")
     scope = section(output, where) if where else output
     loc = f" in section {where!r}" if where else ""
