@@ -1,5 +1,13 @@
 # AgentDay-Example
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-3DA639)](LICENSE)
+![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776AB?logo=python&logoColor=white)
+![TOA Agent Build Day](https://img.shields.io/badge/TOA%20Agent%20Build%20Day-Jun%2027%2C%202026-CC0000)
+[![agentskills.io](https://img.shields.io/badge/agentskills.io-10%2F10%20skills%20validate-brightgreen)](https://agentskills.io)
+![Skill evals](https://img.shields.io/badge/skill%20evals-9%2F9%20positive%20delta-brightgreen)
+![Zero keys required](https://img.shields.io/badge/API%20keys-zero%20required-blueviolet)
+![Models](https://img.shields.io/badge/models-Granite%20local%20%C2%B7%20Claude%20%C2%B7%20GPT%20%C2%B7%20Gemini-FF6F00)
+
 **Starter agents + skills for [TOA Agent Build Day](https://github.com/holzerjm) · Saturday, June 27, 2026 · TOA Boston, Fort Point**
 
 *Wicked Smart Agents: pick a lane, pick your models, ship a skill.*
