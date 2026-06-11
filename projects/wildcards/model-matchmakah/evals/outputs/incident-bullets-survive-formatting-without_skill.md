@@ -1,0 +1,3 @@
+- API error rate increased to 14% since 09:12 UTC.
+- Cause of the issue remains unknown.
+- Payments have not been affected by this incident.

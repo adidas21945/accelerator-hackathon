@@ -1,0 +1,44 @@
+{
+  "skill": "skills/storm-prep",
+  "runs": ["with_skill", "without_skill"],
+  "cases": [
+    {
+      "id": "boston-brief",
+      "input": "Build a storm-readiness brief for Boston, MA.",
+      "assertions": [
+        {"type": "contains_section", "value": "Situation"},
+        {"type": "contains_section", "value": "Next 48", "why": "the Next 48 hours section (granite renders '48 hours' with a U+202F narrow no-break space — match the stable prefix)"},
+        {"type": "contains_section", "value": "Do now"},
+        {"type": "contains_section", "value": "bag check", "why": "the Go-bag check section (matched on 'bag check': granite likes to render the hyphen as U+2011)"},
+        {"type": "contains_section", "value": "caveats", "why": "the Sources & caveats section"},
+        {"type": "numeric_present", "where": "Next 48", "why": "forecast lines must carry temperatures/wind/precip numbers"},
+        {"type": "count_min", "pattern": "^\\s*(?:\\d+[.)]|[-*])\\s+\\S", "min": 3, "where": "Do now", "why": "at least 3 prioritized actions"},
+        {"type": "regex", "value": "(?i)weather\\.gov|national weather service|NWS", "where": "caveats", "why": "NWS named as the source"}
+      ]
+    },
+    {
+      "id": "suffolk-weekend-honest",
+      "input": "Are we okay in Suffolk County this weekend?",
+      "assertions": [
+        {"type": "contains_section", "value": "Situation"},
+        {"type": "contains_section", "value": "Do now"},
+        {"type": "contains_section", "value": "caveats"},
+        {"type": "regex", "value": "(?i)hurricane|coastal flood|high wind|warning", "where": "Situation", "why": "the fixture has severe alerts — an honest answer names them, no sugar-coating"},
+        {"type": "not_regex", "value": "(?i)evacuate immediately|catastrophic", "why": "calm voice: severity words belong to NWS, evacuation calls to local officials"},
+        {"type": "numeric_present", "where": "Next 48", "why": "the reassurance question still gets real forecast numbers"}
+      ]
+    },
+    {
+      "id": "elderly-neighbor",
+      "input": "My elderly neighbor lives alone near Boston. What should she do before this weekend's storm?",
+      "assertions": [
+        {"type": "contains_section", "value": "Do now"},
+        {"type": "contains_section", "value": "bag check"},
+        {"type": "count_min", "pattern": "^\\s*(?:\\d+[.)]|[-*])\\s+\\S", "min": 3, "where": "Do now", "why": "she needs concrete prioritized steps"},
+        {"type": "numeric_present", "where": "Next 48", "why": "forecast numbers survive the reframing"},
+        {"type": "regex", "value": "(?i)water", "where": "bag check", "why": "water is mandatory go-bag content"},
+        {"type": "regex", "value": "(?i)medication|medicine|prescription", "where": "bag check", "why": "a 7-day med supply matters doubly for an elderly neighbor"}
+      ]
+    }
+  ]
+}

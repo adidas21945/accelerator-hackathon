@@ -1,0 +1,36 @@
+{
+  "skill": "skills/expense-report",
+  "runs": ["with_skill", "without_skill"],
+  "cases": [
+    {
+      "id": "monthly-summary",
+      "input": "Summarize my receipts for May 2026.",
+      "assertions": [
+        {"type": "contains_section", "value": "Summary"},
+        {"type": "contains_section", "value": "By category"},
+        {"type": "contains_section", "value": "Ledger"},
+        {"type": "contains_section", "value": "Flags"},
+        {"type": "numeric_present", "where": "Summary", "why": "receipt count and dollar total up front"},
+        {"type": "script", "path": "evals/check_csv.py", "why": "the ledger CSV actually parses: exact header, >=4 rows, float totals, allowed categories"}
+      ]
+    },
+    {
+      "id": "top-category",
+      "input": "Which category did I spend the most on?",
+      "assertions": [
+        {"type": "contains_section", "value": "Summary"},
+        {"type": "regex", "value": "(?i)groceries", "where": "Summary", "why": "Groceries ($112.84) is the data-determined top category, duplicate counted or not"},
+        {"type": "numeric_present", "where": "Summary", "why": "the answer carries a dollar amount, not vibes"}
+      ]
+    },
+    {
+      "id": "duplicate-hunt",
+      "input": "Any duplicate or suspicious receipts?",
+      "assertions": [
+        {"type": "contains_section", "value": "Flags"},
+        {"type": "regex", "value": "(?i)duplicate", "where": "Flags", "why": "receipt-02 and receipt-06 share vendor, date, and total"},
+        {"type": "regex", "value": "(?i)beacon hill beans", "why": "the flagged vendor is named, not hand-waved"}
+      ]
+    }
+  ]
+}

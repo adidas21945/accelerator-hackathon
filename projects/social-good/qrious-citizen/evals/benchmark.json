@@ -1,0 +1,296 @@
+{
+  "project": "qrious-citizen",
+  "provider": "local",
+  "model_hint": "",
+  "modes": {
+    "with_skill": {
+      "passed": 3,
+      "total": 3,
+      "pass_rate": 1.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 42.33
+    },
+    "without_skill": {
+      "passed": 0,
+      "total": 3,
+      "pass_rate": 0.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 33.82
+    }
+  },
+  "results": [
+    {
+      "case": "rodents-by-neighborhood",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Headline finding': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'The data': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'What we found': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Caveats': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Reproduce it': present"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Headline finding': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex 'data\\\\.boston\\\\.gov' in section 'The data': found"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)roxbury': found"
+        },
+        {
+          "type": "count_min",
+          "ok": true,
+          "evidence": "'^(?:[-*]|\\\\d+\\\\.) ' in section 'Caveats': found 2, need >= 2"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 63.42,
+      "output_path": "evals/outputs/rodents-by-neighborhood-with_skill.md"
+    },
+    {
+      "case": "rodents-by-neighborhood",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Headline finding': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'The data': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'What we found': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Caveats': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Reproduce it': MISSING"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'Headline finding': MISSING"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex 'data\\\\.boston\\\\.gov' in section 'The data': NOT found"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)roxbury': found"
+        },
+        {
+          "type": "count_min",
+          "ok": false,
+          "evidence": "'^(?:[-*]|\\\\d+\\\\.) ' in section 'Caveats': found 0, need >= 2"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 54.22,
+      "output_path": "evals/outputs/rodents-by-neighborhood-without_skill.md"
+    },
+    {
+      "case": "cases-by-neighborhood",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Headline finding': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'The data': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Reproduce it': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)https?://|SELECT' in section 'Reproduce it': found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'What we found': present"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden \"(?i)i (do not|don't|cannot|can't) (have )?(access|the data|real-?time)\": absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 32.53,
+      "output_path": "evals/outputs/cases-by-neighborhood-with_skill.md"
+    },
+    {
+      "case": "cases-by-neighborhood",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Headline finding': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'The data': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Reproduce it': MISSING"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)https?://|SELECT' in section 'Reproduce it': NOT found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'What we found': MISSING"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden \"(?i)i (do not|don't|cannot|can't) (have )?(access|the data|real-?time)\": absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 17.94,
+      "output_path": "evals/outputs/cases-by-neighborhood-without_skill.md"
+    },
+    {
+      "case": "top-complaint-types",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Headline finding': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'What we found': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Caveats': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)rodent' in section 'What we found': found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Headline finding': present"
+        },
+        {
+          "type": "count_min",
+          "ok": true,
+          "evidence": "'^(?:[-*]|\\\\d+\\\\.) .*\\\\d' in section 'What we found': found 5, need >= 3"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 31.03,
+      "output_path": "evals/outputs/top-complaint-types-with_skill.md"
+    },
+    {
+      "case": "top-complaint-types",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Headline finding': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'What we found': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Caveats': MISSING"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)rodent' in section 'What we found': NOT found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'Headline finding': MISSING"
+        },
+        {
+          "type": "count_min",
+          "ok": false,
+          "evidence": "'^(?:[-*]|\\\\d+\\\\.) .*\\\\d' in section 'What we found': found 0, need >= 3"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 29.29,
+      "output_path": "evals/outputs/top-complaint-types-without_skill.md"
+    }
+  ],
+  "delta": {
+    "pass_rate": 1.0
+  }
+}

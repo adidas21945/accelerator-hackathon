@@ -1,0 +1,8 @@
+# The three feeds this briefcase follows. These URLs are documentation:
+# offline mode (the default for evals) always reads cached-headlines.xml,
+# the snapshot cached 2026-06-25. Live mode (TAVILY_API_KEY set and not
+# AGENT_OFFLINE) searches Tavily instead of polling these directly.
+
+https://micromobilityreport.example/feed.xml      # e-bike & fleet industry
+https://blog.agentskills.example/atom.xml         # agent-skills ecosystem
+https://boston-wire.example/news/rss.xml          # Boston local news

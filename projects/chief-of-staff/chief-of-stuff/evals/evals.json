@@ -1,0 +1,42 @@
+{
+  "skill": "skills/morning-brief",
+  "runs": ["with_skill", "without_skill"],
+  "cases": [
+    {
+      "id": "friday-brief-cross-reference",
+      "input": "Build my morning brief for Friday, June 26, 2026.",
+      "assertions": [
+        {"type": "contains_section", "value": "Top 3"},
+        {"type": "contains_section", "value": "Today"},
+        {"type": "contains_section", "value": "Meeting prep"},
+        {"type": "contains_section", "value": "Loose ends"},
+        {"type": "count_min", "pattern": "^\\s*\\d+\\.", "min": 3, "where": "Top 3", "why": "three ranked priorities, numbered"},
+        {"type": "regex", "value": "(?i)client sync|beacon hill", "where": "Top 3", "why": "the todo + 09:00 meeting + note-deadline cross-reference landed as a priority"},
+        {"type": "regex", "value": "\\d{1,2}:\\d{2}", "where": "Today", "why": "schedule lines carry their times"},
+        {"type": "not_regex", "value": "(?i)quarterly board", "where": "Today", "why": "the July 2 decoy event in calendar.ics must not leak into June 26 — never invent meetings"}
+      ]
+    },
+    {
+      "id": "meeting-prep-client-sync",
+      "input": "prep: Client sync — Beacon Hill Bikes",
+      "assertions": [
+        {"type": "contains_section", "value": "Where it left off"},
+        {"type": "contains_section", "value": "Open questions"},
+        {"type": "contains_section", "value": "Your ask"},
+        {"type": "count_min", "pattern": "^\\s*\\d+\\.", "min": 1, "where": "Open questions", "why": "unanswered questions from the last notes lead, numbered"},
+        {"type": "regex", "value": "(?i)proposal|pricing|40-bike", "why": "the prep is grounded in the client-sync note, not generic advice"}
+      ]
+    },
+    {
+      "id": "saturday-quiet-day",
+      "input": "Build my morning brief for Saturday, June 27, 2026.",
+      "assertions": [
+        {"type": "contains_section", "value": "Top 3"},
+        {"type": "contains_section", "value": "Today"},
+        {"type": "regex", "value": "(?i)agent build day", "where": "Today", "why": "Saturday's one real event shows up"},
+        {"type": "not_regex", "value": "^\\s*4\\.", "where": "Top 3", "why": "top-3 MAX even on a quiet day — a 4th numbered item makes it a todo list"},
+        {"type": "not_regex", "value": "(?i)client sync|vendor demo", "where": "Today", "why": "Friday's meetings must not bleed into Saturday's schedule"}
+      ]
+    }
+  ]
+}

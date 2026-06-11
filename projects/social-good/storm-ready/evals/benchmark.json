@@ -1,0 +1,286 @@
+{
+  "project": "storm-ready",
+  "provider": "local",
+  "model_hint": "",
+  "modes": {
+    "with_skill": {
+      "passed": 3,
+      "total": 3,
+      "pass_rate": 1.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 54.81
+    },
+    "without_skill": {
+      "passed": 0,
+      "total": 3,
+      "pass_rate": 0.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 61.88
+    }
+  },
+  "results": [
+    {
+      "case": "boston-brief",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Situation': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Next 48': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Do now': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'bag check': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'caveats': present"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Next 48': present"
+        },
+        {
+          "type": "count_min",
+          "ok": true,
+          "evidence": "'^\\\\s*(?:\\\\d+[.)]|[-*])\\\\s+\\\\S' in section 'Do now': found 5, need >= 3"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)weather\\\\.gov|national weather service|NWS' in section 'caveats': found"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 58.34,
+      "output_path": "evals/outputs/boston-brief-with_skill.md"
+    },
+    {
+      "case": "boston-brief",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Situation': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Next 48': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Do now': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'bag check': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'caveats': MISSING"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'Next 48': MISSING"
+        },
+        {
+          "type": "count_min",
+          "ok": false,
+          "evidence": "'^\\\\s*(?:\\\\d+[.)]|[-*])\\\\s+\\\\S' in section 'Do now': found 0, need >= 3"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)weather\\\\.gov|national weather service|NWS' in section 'caveats': NOT found"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 71.57,
+      "output_path": "evals/outputs/boston-brief-without_skill.md"
+    },
+    {
+      "case": "suffolk-weekend-honest",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Situation': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Do now': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'caveats': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)hurricane|coastal flood|high wind|warning' in section 'Situation': found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)evacuate immediately|catastrophic': absent (good)"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Next 48': present"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 39.61,
+      "output_path": "evals/outputs/suffolk-weekend-honest-with_skill.md"
+    },
+    {
+      "case": "suffolk-weekend-honest",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Situation': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Do now': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'caveats': MISSING"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)hurricane|coastal flood|high wind|warning' in section 'Situation': NOT found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)evacuate immediately|catastrophic': absent (good)"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'Next 48': MISSING"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 57.69,
+      "output_path": "evals/outputs/suffolk-weekend-honest-without_skill.md"
+    },
+    {
+      "case": "elderly-neighbor",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Do now': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'bag check': present"
+        },
+        {
+          "type": "count_min",
+          "ok": true,
+          "evidence": "'^\\\\s*(?:\\\\d+[.)]|[-*])\\\\s+\\\\S' in section 'Do now': found 6, need >= 3"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Next 48': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)water' in section 'bag check': found"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)medication|medicine|prescription' in section 'bag check': found"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 66.48,
+      "output_path": "evals/outputs/elderly-neighbor-with_skill.md"
+    },
+    {
+      "case": "elderly-neighbor",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Do now': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'bag check': MISSING"
+        },
+        {
+          "type": "count_min",
+          "ok": false,
+          "evidence": "'^\\\\s*(?:\\\\d+[.)]|[-*])\\\\s+\\\\S' in section 'Do now': found 0, need >= 3"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'Next 48': MISSING"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)water' in section 'bag check': NOT found"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)medication|medicine|prescription' in section 'bag check': NOT found"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 56.39,
+      "output_path": "evals/outputs/elderly-neighbor-without_skill.md"
+    }
+  ],
+  "delta": {
+    "pass_rate": 1.0
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "skill": "skills/campaign-rules",
+  "runs": ["with_skill", "without_skill"],
+  "cases": [
+    {
+      "id": "brownstone-opening",
+      "input": "Start a one-shot adventure in a haunted Boston brownstone.",
+      "assertions": [
+        {"type": "contains_section", "value": "Scene"},
+        {"type": "contains_section", "value": "Party status"},
+        {"type": "contains_section", "value": "Your options"},
+        {"type": "count_min", "pattern": "^\\s*\\d+\\.", "min": 2, "where": "Your options", "why": "numbered options the players can actually act on"},
+        {"type": "numeric_present", "where": "Party status", "why": "HP numbers are tracked, not vibes"}
+      ]
+    },
+    {
+      "id": "crowbar-charge",
+      "input": "I kick open the cellar door and charge the ghoul with my crowbar!",
+      "assertions": [
+        {"type": "regex", "value": "(?i)\\b\\d{1,2}d(4|6|8|10|12|20|100)\\b|\\broll", "where": "Scene", "why": "dice mechanics surfaced in the narration, not invented silently"},
+        {"type": "contains_section", "value": "Party status"},
+        {"type": "contains_section", "value": "Your options"}
+      ]
+    },
+    {
+      "id": "study-search-no-cheap-death",
+      "input": "We search the dusty study for hidden documents about the house's previous owner.",
+      "assertions": [
+        {"type": "contains_section", "value": "Scene"},
+        {"type": "contains_section", "value": "Your options"},
+        {"type": "count_min", "pattern": "^\\s*\\d+\\.", "min": 2, "where": "Your options"},
+        {"type": "not_regex", "value": "(?i)you (are )?dead|you die|game over|total party kill", "why": "no unearned deaths on a simple search"}
+      ]
+    }
+  ]
+}

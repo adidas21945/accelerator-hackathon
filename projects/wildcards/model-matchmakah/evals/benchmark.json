@@ -1,0 +1,236 @@
+{
+  "project": "model-matchmakah",
+  "provider": "local",
+  "model_hint": "",
+  "modes": {
+    "with_skill": {
+      "passed": 3,
+      "total": 3,
+      "pass_rate": 1.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 5.37
+    },
+    "without_skill": {
+      "passed": 0,
+      "total": 3,
+      "pass_rate": 0.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 1.72
+    }
+  },
+  "results": [
+    {
+      "case": "easy-fact-routes-local",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Answer': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Routing decision': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'What it means': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)boston' in section 'Answer': found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Routing decision': present"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 2.94,
+      "output_path": "evals/outputs/easy-fact-routes-local-with_skill.md"
+    },
+    {
+      "case": "easy-fact-routes-local",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Answer': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Routing decision': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'What it means': MISSING"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)boston' in section 'Answer': NOT found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'Routing decision': MISSING"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 0.46,
+      "output_path": "evals/outputs/easy-fact-routes-local-without_skill.md"
+    },
+    {
+      "case": "reasoning-trap-still-shows-receipt",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Answer': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Routing decision': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'What it means': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)local|escalat' in section 'Routing decision': found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Routing decision': present"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 9.08,
+      "output_path": "evals/outputs/reasoning-trap-still-shows-receipt-with_skill.md"
+    },
+    {
+      "case": "reasoning-trap-still-shows-receipt",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Answer': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Routing decision': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'What it means': MISSING"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)local|escalat' in section 'Routing decision': NOT found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'Routing decision': MISSING"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 3.94,
+      "output_path": "evals/outputs/reasoning-trap-still-shows-receipt-without_skill.md"
+    },
+    {
+      "case": "incident-bullets-survive-formatting",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Answer': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'What it means': present"
+        },
+        {
+          "type": "count_min",
+          "ok": true,
+          "evidence": "'^\\\\s*(?:[-*\u2022]|\\\\d+[.)])' in section 'Answer': found 3, need >= 3"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '14' in section 'Answer': found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Routing decision': present"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 4.09,
+      "output_path": "evals/outputs/incident-bullets-survive-formatting-with_skill.md"
+    },
+    {
+      "case": "incident-bullets-survive-formatting",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Answer': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'What it means': MISSING"
+        },
+        {
+          "type": "count_min",
+          "ok": false,
+          "evidence": "'^\\\\s*(?:[-*\u2022]|\\\\d+[.)])' in section 'Answer': found 0, need >= 3"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '14' in section 'Answer': NOT found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'Routing decision': MISSING"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 0.75,
+      "output_path": "evals/outputs/incident-bullets-survive-formatting-without_skill.md"
+    }
+  ],
+  "delta": {
+    "pass_rate": 1.0
+  }
+}

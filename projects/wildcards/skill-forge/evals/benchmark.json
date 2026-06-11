@@ -1,0 +1,236 @@
+{
+  "project": "skill-forge",
+  "provider": "local",
+  "model_hint": "",
+  "modes": {
+    "with_skill": {
+      "passed": 3,
+      "total": 3,
+      "pass_rate": 1.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 20.08
+    },
+    "without_skill": {
+      "passed": 0,
+      "total": 3,
+      "pass_rate": 0.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 47.6
+    }
+  },
+  "results": [
+    {
+      "case": "docs-formatter",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "script",
+          "ok": true,
+          "evidence": "script evals/check_generated.py: exit 0 ok: 'format-engineering-notes' extracted, craft-checked, and validator-approved"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Skill plan': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Validation': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)^valid skill:' in section 'Validation': found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden 'REPLACE|\\\\bTODO\\\\b': absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 16.78,
+      "output_path": "evals/outputs/docs-formatter-with_skill.md"
+    },
+    {
+      "case": "docs-formatter",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "script",
+          "ok": false,
+          "evidence": "script evals/check_generated.py: exit 1 FAIL: name 'Engineering Notes Formatter' is not lowercase-hyphens (1-64 chars, no edge/double hyphens)"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Skill plan': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Validation': present"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)^valid skill:' in section 'Validation': NOT found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden 'REPLACE|\\\\bTODO\\\\b': absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 50.34,
+      "output_path": "evals/outputs/docs-formatter-without_skill.md"
+    },
+    {
+      "case": "code-review-checklist",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "script",
+          "ok": true,
+          "evidence": "script evals/check_generated.py: exit 0 ok: 'python-premerge-checklist' extracted, craft-checked, and validator-approved"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Skill plan': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Validation': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)^valid skill:' in section 'Validation': found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden 'REPLACE|\\\\bTODO\\\\b': absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 33.24,
+      "output_path": "evals/outputs/code-review-checklist-with_skill.md"
+    },
+    {
+      "case": "code-review-checklist",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "script",
+          "ok": false,
+          "evidence": "script evals/check_generated.py: exit 1 FAIL: no fenced SKILL.md block with frontmatter in the agent output"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Skill plan': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Validation': present"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)^valid skill:' in section 'Validation': NOT found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden 'REPLACE|\\\\bTODO\\\\b': absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 46.02,
+      "output_path": "evals/outputs/code-review-checklist-without_skill.md"
+    },
+    {
+      "case": "data-brief",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "script",
+          "ok": true,
+          "evidence": "script evals/check_generated.py: exit 0 ok: 'csv-to-data-brief' extracted, craft-checked, and validator-approved"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Skill plan': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Validation': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)^valid skill:' in section 'Validation': found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden 'REPLACE|\\\\bTODO\\\\b': absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 10.23,
+      "output_path": "evals/outputs/data-brief-with_skill.md"
+    },
+    {
+      "case": "data-brief",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "script",
+          "ok": false,
+          "evidence": "script evals/check_generated.py: exit 1 FAIL: name 'City Service Requests Data Brief' is not lowercase-hyphens (1-64 chars, no edge/double hyphens)"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Skill plan': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Validation': present"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)^valid skill:' in section 'Validation': NOT found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden 'REPLACE|\\\\bTODO\\\\b': absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 46.45,
+      "output_path": "evals/outputs/data-brief-without_skill.md"
+    }
+  ],
+  "delta": {
+    "pass_rate": 1.0
+  }
+}

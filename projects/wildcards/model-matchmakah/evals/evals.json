@@ -1,0 +1,39 @@
+{
+  "skill": "skills/routing-rationale",
+  "runs": ["with_skill", "without_skill"],
+  "cases": [
+    {
+      "id": "easy-fact-routes-local",
+      "input": "What is the capital of Massachusetts?",
+      "assertions": [
+        {"type": "contains_section", "value": "Answer"},
+        {"type": "contains_section", "value": "Routing decision"},
+        {"type": "contains_section", "value": "What it means"},
+        {"type": "regex", "value": "(?i)boston", "where": "Answer", "why": "the routed answer is still correct"},
+        {"type": "numeric_present", "where": "Routing decision", "why": "the receipt carries real numbers (confidence / $ / latency)"}
+      ]
+    },
+    {
+      "id": "reasoning-trap-still-shows-receipt",
+      "input": "Explain why switching doors wins the Monty Hall problem, convincingly enough for a skeptic.",
+      "assertions": [
+        {"type": "contains_section", "value": "Answer"},
+        {"type": "contains_section", "value": "Routing decision"},
+        {"type": "contains_section", "value": "What it means"},
+        {"type": "regex", "value": "(?i)local|escalat", "where": "Routing decision", "why": "the receipt names where the query resolved"},
+        {"type": "numeric_present", "where": "Routing decision"}
+      ]
+    },
+    {
+      "id": "incident-bullets-survive-formatting",
+      "input": "Draft a 3-bullet incident update from these facts: API error rate 14% since 09:12 UTC, cause unknown, payments unaffected, next update by 10:30 UTC.",
+      "assertions": [
+        {"type": "contains_section", "value": "Answer"},
+        {"type": "contains_section", "value": "What it means"},
+        {"type": "count_min", "pattern": "^\\s*(?:[-*•]|\\d+[.)])", "min": 3, "where": "Answer", "why": "the 3 requested bullets survive the formatting pass"},
+        {"type": "regex", "value": "14", "where": "Answer", "why": "the key fact (14% error rate) survives the formatting pass"},
+        {"type": "numeric_present", "where": "Routing decision"}
+      ]
+    }
+  ]
+}

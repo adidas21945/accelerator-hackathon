@@ -1,0 +1,4 @@
+[
+  {"name": "Sully", "class": "fighter", "hp": 12, "item": "a dented crowbar"},
+  {"name": "Murph", "class": "rogue", "hp": 9, "item": "a lockpick set"}
+]

@@ -1,0 +1,266 @@
+{
+  "project": "chief-of-stuff",
+  "provider": "local",
+  "model_hint": "",
+  "modes": {
+    "with_skill": {
+      "passed": 3,
+      "total": 3,
+      "pass_rate": 1.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 52.54
+    },
+    "without_skill": {
+      "passed": 0,
+      "total": 3,
+      "pass_rate": 0.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 40.55
+    }
+  },
+  "results": [
+    {
+      "case": "friday-brief-cross-reference",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Top 3': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Today': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Meeting prep': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Loose ends': present"
+        },
+        {
+          "type": "count_min",
+          "ok": true,
+          "evidence": "'^\\\\s*\\\\d+\\\\.' in section 'Top 3': found 3, need >= 3"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)client sync|beacon hill' in section 'Top 3': found"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '\\\\d{1,2}:\\\\d{2}' in section 'Today': found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)quarterly board' in section 'Today': absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 64.02,
+      "output_path": "evals/outputs/friday-brief-cross-reference-with_skill.md"
+    },
+    {
+      "case": "friday-brief-cross-reference",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Top 3': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Today': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Meeting prep': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Loose ends': MISSING"
+        },
+        {
+          "type": "count_min",
+          "ok": false,
+          "evidence": "'^\\\\s*\\\\d+\\\\.' in section 'Top 3': found 0, need >= 3"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)client sync|beacon hill' in section 'Top 3': NOT found"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '\\\\d{1,2}:\\\\d{2}' in section 'Today': NOT found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)quarterly board' in section 'Today': absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 80.78,
+      "output_path": "evals/outputs/friday-brief-cross-reference-without_skill.md"
+    },
+    {
+      "case": "meeting-prep-client-sync",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Where it left off': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Open questions': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Your ask': present"
+        },
+        {
+          "type": "count_min",
+          "ok": true,
+          "evidence": "'^\\\\s*\\\\d+\\\\.' in section 'Open questions': found 3, need >= 1"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)proposal|pricing|40-bike': found"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 27.97,
+      "output_path": "evals/outputs/meeting-prep-client-sync-with_skill.md"
+    },
+    {
+      "case": "meeting-prep-client-sync",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Where it left off': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Open questions': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Your ask': MISSING"
+        },
+        {
+          "type": "count_min",
+          "ok": true,
+          "evidence": "'^\\\\s*\\\\d+\\\\.' in section 'Open questions': found 3, need >= 1"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)proposal|pricing|40-bike': found"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 11.34,
+      "output_path": "evals/outputs/meeting-prep-client-sync-without_skill.md"
+    },
+    {
+      "case": "saturday-quiet-day",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Top 3': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Today': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)agent build day' in section 'Today': found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '^\\\\s*4\\\\.' in section 'Top 3': absent (good)"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)client sync|vendor demo' in section 'Today': absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 65.64,
+      "output_path": "evals/outputs/saturday-quiet-day-with_skill.md"
+    },
+    {
+      "case": "saturday-quiet-day",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Top 3': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Today': present"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)agent build day' in section 'Today': NOT found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '^\\\\s*4\\\\.' in section 'Top 3': absent (good)"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)client sync|vendor demo' in section 'Today': absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 29.54,
+      "output_path": "evals/outputs/saturday-quiet-day-without_skill.md"
+    }
+  ],
+  "delta": {
+    "pass_rate": 1.0
+  }
+}

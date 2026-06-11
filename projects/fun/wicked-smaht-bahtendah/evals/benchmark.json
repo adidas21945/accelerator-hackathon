@@ -1,0 +1,216 @@
+{
+  "project": "wicked-smaht-bahtendah",
+  "provider": "local",
+  "model_hint": "",
+  "modes": {
+    "with_skill": {
+      "passed": 3,
+      "total": 3,
+      "pass_rate": 1.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 4.44
+    },
+    "without_skill": {
+      "passed": 0,
+      "total": 3,
+      "pass_rate": 0.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 5.26
+    }
+  },
+  "results": [
+    {
+      "case": "zero-proof-by-default",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'The drink': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'You need': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Build it': present"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)\\\\b(rum|vodka|gin|whiskey|whisky|tequila|bourbon)\\\\b' in section 'You need': absent (good)"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'You need': present"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 3.92,
+      "output_path": "evals/outputs/zero-proof-by-default-with_skill.md"
+    },
+    {
+      "case": "zero-proof-by-default",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'The drink': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'You need': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Build it': MISSING"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)\\\\b(rum|vodka|gin|whiskey|whisky|tequila|bourbon)\\\\b' in section 'You need': absent (good)"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'You need': MISSING"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 5.17,
+      "output_path": "evals/outputs/zero-proof-by-default-without_skill.md"
+    },
+    {
+      "case": "boozy-when-asked",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Switch it': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)tequila' in section 'You need': found"
+        },
+        {
+          "type": "count_min",
+          "ok": true,
+          "evidence": "'^\\\\s*\\\\d+\\\\.' in section 'Build it': found 3, need >= 3"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 4.62,
+      "output_path": "evals/outputs/boozy-when-asked-with_skill.md"
+    },
+    {
+      "case": "boozy-when-asked",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Switch it': MISSING"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)tequila' in section 'You need': NOT found"
+        },
+        {
+          "type": "count_min",
+          "ok": false,
+          "evidence": "'^\\\\s*\\\\d+\\\\.' in section 'Build it': found 0, need >= 3"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 6.39,
+      "output_path": "evals/outputs/boozy-when-asked-without_skill.md"
+    },
+    {
+      "case": "pantry-scraps-invention",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'The drink': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'You need': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)orange juice|soda water|grenadine' in section 'You need': found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)\\\\b(rum|vodka|gin|whiskey|whisky|tequila|bourbon)\\\\b' in section 'You need': absent (good)"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'You need': present"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 4.79,
+      "output_path": "evals/outputs/pantry-scraps-invention-with_skill.md"
+    },
+    {
+      "case": "pantry-scraps-invention",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'The drink': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'You need': MISSING"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)orange juice|soda water|grenadine' in section 'You need': NOT found"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)\\\\b(rum|vodka|gin|whiskey|whisky|tequila|bourbon)\\\\b' in section 'You need': absent (good)"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'You need': MISSING"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 4.22,
+      "output_path": "evals/outputs/pantry-scraps-invention-without_skill.md"
+    }
+  ],
+  "delta": {
+    "pass_rate": 1.0
+  }
+}

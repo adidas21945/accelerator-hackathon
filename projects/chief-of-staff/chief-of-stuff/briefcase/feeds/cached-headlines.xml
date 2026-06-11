@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>chief-of-stuff cached headlines (fixture)</title>
+    <link>https://example.invalid/feeds</link>
+    <description>Snapshot of the feeds in feeds.txt, cached 2026-06-25. Offline runs read this file.</description>
+    <item>
+      <title>E-bike fleet operators report 30% maintenance savings from predictive telemetry</title>
+      <link>https://micromobilityreport.example/telemetry-savings</link>
+      <description>Operators piping battery and motor telemetry into maintenance scheduling caught failures weeks early, cutting shop time across commuter fleets.</description>
+      <pubDate>Wed, 24 Jun 2026 14:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Boston adds protected bike lanes around Beacon Hill ahead of summer commuter push</title>
+      <link>https://boston-wire.example/beacon-hill-lanes</link>
+      <description>The new Charles Street segments connect two of the busiest dock locations in the downtown network.</description>
+      <pubDate>Wed, 24 Jun 2026 11:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Agent-skills ecosystem passes 10,000 published skills as enterprises standardize</title>
+      <link>https://blog.agentskills.example/10k-skills</link>
+      <description>The open SKILL.md format keeps spreading; validators and registries are becoming table stakes for agent teams.</description>
+      <pubDate>Tue, 23 Jun 2026 16:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Sourdough hydration debate reignites at national baking expo</title>
+      <link>https://example.invalid/sourdough</link>
+      <description>Bakers split over 75% versus 85% hydration; nobody changed their mind.</description>
+      <pubDate>Tue, 23 Jun 2026 09:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Red Sox shuffle bullpen ahead of weekend homestand</title>
+      <link>https://example.invalid/redsox</link>
+      <description>Two call-ups from Worcester as the rotation limps into July.</description>
+      <pubDate>Wed, 24 Jun 2026 22:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Streaming bundle prices climb for the third year running</title>
+      <link>https://example.invalid/streaming</link>
+      <description>The average household now pays more than the old cable bill it cancelled.</description>
+      <pubDate>Mon, 22 Jun 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>New England weekend forecast: sunny Saturday, muggy Sunday</title>
+      <link>https://example.invalid/weather</link>
+      <description>Saturday looks clear and 78F in Boston — a good day to be indoors building agents, honestly.</description>
+      <pubDate>Thu, 25 Jun 2026 06:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Global shipping rates tick down for a third straight month</title>
+      <link>https://example.invalid/shipping</link>
+      <description>Container spot rates ease as fuel costs stabilize.</description>
+      <pubDate>Mon, 22 Jun 2026 08:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>City Hall Plaza farmers market expands to Thursdays</title>
+      <link>https://example.invalid/farmers-market</link>
+      <description>Twelve new vendors join the downtown lunchtime crowd.</description>
+      <pubDate>Tue, 23 Jun 2026 15:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Partial lunar eclipse to be visible over the Atlantic next month</title>
+      <link>https://example.invalid/eclipse</link>
+      <description>Skywatchers get a modest show in early July, weather permitting.</description>
+      <pubDate>Sun, 21 Jun 2026 19:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

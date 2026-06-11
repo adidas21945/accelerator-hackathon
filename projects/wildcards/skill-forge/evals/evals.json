@@ -1,0 +1,39 @@
+{
+  "skill": "skills/skill-author",
+  "runs": ["with_skill", "without_skill"],
+  "cases": [
+    {
+      "id": "docs-formatter",
+      "input": "Build a skill that formats rough engineering notes into a polished how-to page for our internal wiki.",
+      "assertions": [
+        {"type": "script", "path": "evals/check_generated.py", "why": "the generated SKILL.md must extract, satisfy the authoring rules, and pass the agentskills validator"},
+        {"type": "contains_section", "value": "Skill plan"},
+        {"type": "contains_section", "value": "Validation"},
+        {"type": "regex", "value": "(?i)^valid skill:", "where": "Validation", "why": "the validator's real verdict line ('Validation' in the heading must not count)"},
+        {"type": "not_regex", "value": "REPLACE|\\bTODO\\b", "why": "no unfilled template slots anywhere in the answer"}
+      ]
+    },
+    {
+      "id": "code-review-checklist",
+      "input": "Build a skill that runs a pre-merge review checklist on Python pull requests and reports blocking versus non-blocking findings.",
+      "assertions": [
+        {"type": "script", "path": "evals/check_generated.py"},
+        {"type": "contains_section", "value": "Skill plan"},
+        {"type": "contains_section", "value": "Validation"},
+        {"type": "regex", "value": "(?i)^valid skill:", "where": "Validation"},
+        {"type": "not_regex", "value": "REPLACE|\\bTODO\\b"}
+      ]
+    },
+    {
+      "id": "data-brief",
+      "input": "Build a skill that turns a CSV summary of city service requests into a one-page data brief for a non-technical audience.",
+      "assertions": [
+        {"type": "script", "path": "evals/check_generated.py"},
+        {"type": "contains_section", "value": "Skill plan"},
+        {"type": "contains_section", "value": "Validation"},
+        {"type": "regex", "value": "(?i)^valid skill:", "where": "Validation"},
+        {"type": "not_regex", "value": "REPLACE|\\bTODO\\b"}
+      ]
+    }
+  ]
+}

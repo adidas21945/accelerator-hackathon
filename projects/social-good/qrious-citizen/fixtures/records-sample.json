@@ -1,0 +1,465 @@
+{
+ "help": "https://data.boston.gov/api/3/action/help_show?name=datastore_search",
+ "success": true,
+ "result": {
+  "resource_id": "dff4d804-5031-443a-8409-8344efd0e5c8",
+  "fields": [
+   {
+    "id": "_id",
+    "type": "int"
+   },
+   {
+    "id": "case_enquiry_id",
+    "type": "text"
+   },
+   {
+    "id": "open_dt",
+    "type": "text"
+   },
+   {
+    "id": "case_status",
+    "type": "text"
+   },
+   {
+    "id": "case_title",
+    "type": "text"
+   },
+   {
+    "id": "subject",
+    "type": "text"
+   },
+   {
+    "id": "reason",
+    "type": "text"
+   },
+   {
+    "id": "neighborhood",
+    "type": "text"
+   }
+  ],
+  "records": [
+   {
+    "_id": 1,
+    "case_enquiry_id": "101006228045",
+    "open_dt": "2025-08-18 16:10:22",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Roxbury"
+   },
+   {
+    "_id": 2,
+    "case_enquiry_id": "101006282817",
+    "open_dt": "2025-09-10 15:08:01",
+    "case_status": "Duplicate of Existing Case",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Beacon Hill"
+   },
+   {
+    "_id": 3,
+    "case_enquiry_id": "101006304789",
+    "open_dt": "2025-09-28 07:57:55",
+    "case_status": "Duplicate of Existing Case",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Back Bay"
+   },
+   {
+    "_id": 4,
+    "case_enquiry_id": "101006304822",
+    "open_dt": "2025-09-28 08:26:00",
+    "case_status": "Duplicate of Existing Case",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Back Bay"
+   },
+   {
+    "_id": 5,
+    "case_enquiry_id": "101006351387",
+    "open_dt": "2025-10-31 05:17:28",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Greater Mattapan"
+   },
+   {
+    "_id": 6,
+    "case_enquiry_id": "101006216795",
+    "open_dt": "2025-08-10 11:27:44",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Allston / Brighton"
+   },
+   {
+    "_id": 7,
+    "case_enquiry_id": "101006303326",
+    "open_dt": "2025-09-26 15:21:01",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Fenway / Kenmore / Audubon Circle / Longwood"
+   },
+   {
+    "_id": 8,
+    "case_enquiry_id": "101006325145",
+    "open_dt": "2025-10-15 12:54:55",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Back Bay"
+   },
+   {
+    "_id": 9,
+    "case_enquiry_id": "101006282820",
+    "open_dt": "2025-09-10 15:13:14",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Boston"
+   },
+   {
+    "_id": 10,
+    "case_enquiry_id": "101006168996",
+    "open_dt": "2025-07-11 20:36:00",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Hyde Park"
+   },
+   {
+    "_id": 11,
+    "case_enquiry_id": "101006430047",
+    "open_dt": "2025-12-26 03:33:00",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Roxbury"
+   },
+   {
+    "_id": 12,
+    "case_enquiry_id": "101006179548",
+    "open_dt": "2025-07-20 18:02:04",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Dorchester"
+   },
+   {
+    "_id": 13,
+    "case_enquiry_id": "101006361432",
+    "open_dt": "2025-11-10 15:44:13",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Boston"
+   },
+   {
+    "_id": 14,
+    "case_enquiry_id": "101006372801",
+    "open_dt": "2025-11-21 17:20:58",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Back Bay"
+   },
+   {
+    "_id": 15,
+    "case_enquiry_id": "101006412236",
+    "open_dt": "2025-12-15 08:13:39",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Beacon Hill"
+   },
+   {
+    "_id": 16,
+    "case_enquiry_id": "101006287704",
+    "open_dt": "2025-09-14 16:29:07",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Beacon Hill"
+   },
+   {
+    "_id": 17,
+    "case_enquiry_id": "101006314237",
+    "open_dt": "2025-10-06 05:28:17",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Back Bay"
+   },
+   {
+    "_id": 18,
+    "case_enquiry_id": "101006303325",
+    "open_dt": "2025-09-26 15:20:28",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Fenway / Kenmore / Audubon Circle / Longwood"
+   },
+   {
+    "_id": 19,
+    "case_enquiry_id": "101005860918",
+    "open_dt": "2025-06-14 07:21:00",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Jamaica Plain"
+   },
+   {
+    "_id": 20,
+    "case_enquiry_id": "101006014837",
+    "open_dt": "2025-07-05 13:07:06",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Brighton"
+   },
+   {
+    "_id": 21,
+    "case_enquiry_id": "101006213464",
+    "open_dt": "2025-08-07 10:23:39",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Roxbury"
+   },
+   {
+    "_id": 22,
+    "case_enquiry_id": "101006274976",
+    "open_dt": "2025-09-05 09:10:00",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Dorchester"
+   },
+   {
+    "_id": 23,
+    "case_enquiry_id": 101006684523,
+    "open_dt": "2026-06-02 12:44:00",
+    "case_status": "Open",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Roxbury"
+   },
+   {
+    "_id": 24,
+    "case_enquiry_id": 101006634809,
+    "open_dt": "2026-05-06 12:35:53",
+    "case_status": "Open",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Roxbury"
+   },
+   {
+    "_id": 25,
+    "case_enquiry_id": 101006560451,
+    "open_dt": "2026-03-08 11:45:50",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Back Bay"
+   },
+   {
+    "_id": 26,
+    "case_enquiry_id": 101006654551,
+    "open_dt": "2026-05-25 00:05:45",
+    "case_status": "Open",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Roxbury"
+   },
+   {
+    "_id": 27,
+    "case_enquiry_id": 101006627774,
+    "open_dt": "2026-04-29 20:22:00",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Dorchester"
+   },
+   {
+    "_id": 28,
+    "case_enquiry_id": 101006633302,
+    "open_dt": "2026-05-05 09:39:19",
+    "case_status": "Open",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Roxbury"
+   },
+   {
+    "_id": 29,
+    "case_enquiry_id": 101006647673,
+    "open_dt": "2026-05-18 18:50:53",
+    "case_status": "Open",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Beacon Hill"
+   },
+   {
+    "_id": 30,
+    "case_enquiry_id": 101006553803,
+    "open_dt": "2026-03-03 14:15:00",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Hyde Park"
+   },
+   {
+    "_id": 31,
+    "case_enquiry_id": 101006550064,
+    "open_dt": "2026-02-28 15:07:45",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "South End"
+   },
+   {
+    "_id": 32,
+    "case_enquiry_id": 101006637323,
+    "open_dt": "2026-05-08 14:51:00",
+    "case_status": "Open",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Back Bay"
+   },
+   {
+    "_id": 33,
+    "case_enquiry_id": 101006455794,
+    "open_dt": "2026-01-25 11:13:31",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Boston"
+   },
+   {
+    "_id": 34,
+    "case_enquiry_id": 101006573118,
+    "open_dt": "2026-03-17 17:09:04",
+    "case_status": "Closed",
+    "case_title": "Rodent Activity",
+    "subject": "Inspectional Services",
+    "reason": "Environmental Services",
+    "neighborhood": "Roslindale"
+   },
+   {
+    "_id": 35,
+    "case_enquiry_id": "101005854858",
+    "open_dt": "2025-06-08 02:34:44",
+    "case_status": "Closed",
+    "case_title": "Requests for Street Cleaning",
+    "subject": "Public Works Department",
+    "reason": "Street Cleaning",
+    "neighborhood": "Greater Mattapan"
+   },
+   {
+    "_id": 36,
+    "case_enquiry_id": "101005854860",
+    "open_dt": "2025-08-08 02:34:00",
+    "case_status": "Duplicate of Existing Case",
+    "case_title": "Missed Trash: District 04",
+    "subject": "Public Works Department",
+    "reason": "Sanitation",
+    "neighborhood": "Allston / Brighton"
+   },
+   {
+    "_id": 37,
+    "case_enquiry_id": "101005854862",
+    "open_dt": "2025-10-08 02:35:00",
+    "case_status": "Closed",
+    "case_title": "Improper Storage of Trash (Barrels)",
+    "subject": "Public Works Department",
+    "reason": "Code Enforcement",
+    "neighborhood": "Charlestown"
+   },
+   {
+    "_id": 38,
+    "case_enquiry_id": "101005854863",
+    "open_dt": "2025-12-08 02:36:13",
+    "case_status": "Closed",
+    "case_title": "Requests for Street Cleaning",
+    "subject": "Public Works Department",
+    "reason": "Street Cleaning",
+    "neighborhood": "Greater Mattapan"
+   },
+   {
+    "_id": 39,
+    "case_enquiry_id": "101005854867",
+    "open_dt": "2026-01-08 02:38:13",
+    "case_status": "Closed",
+    "case_title": "Parking Enforcement",
+    "subject": "Transportation - Traffic Division",
+    "reason": "Enforcement & Abandoned Vehicles",
+    "neighborhood": "Dorchester"
+   },
+   {
+    "_id": 40,
+    "case_enquiry_id": "101005854868",
+    "open_dt": "2026-02-08 02:39:20",
+    "case_status": "Closed",
+    "case_title": "Parking Enforcement",
+    "subject": "Transportation - Traffic Division",
+    "reason": "Enforcement & Abandoned Vehicles",
+    "neighborhood": "South Boston / South Boston Waterfront"
+   },
+   {
+    "_id": 41,
+    "case_enquiry_id": "101005854869",
+    "open_dt": "2026-03-08 02:39:37",
+    "case_status": "Closed",
+    "case_title": "Request for Pothole Repair",
+    "subject": "Public Works Department",
+    "reason": "Highway Maintenance",
+    "neighborhood": "Allston / Brighton"
+   },
+   {
+    "_id": 42,
+    "case_enquiry_id": "101005854870",
+    "open_dt": "2026-04-08 02:39:47",
+    "case_status": "Open",
+    "case_title": "Parking Enforcement",
+    "subject": "Transportation - Traffic Division",
+    "reason": "Enforcement & Abandoned Vehicles",
+    "neighborhood": "Roxbury"
+   }
+  ],
+  "total": 42,
+  "_note": "Sample built from live data.boston.gov 311 rows (June 2026); dates/statuses lightly edited so the sample spans the last 12 months and includes duplicate-flagged rows."
+ }
+}

@@ -1,0 +1,20 @@
+# ZeroClaw config for chief-of-stuff — local-first morning briefs.
+#
+# Install ZeroClaw via the official installer script, then run
+# `zeroclaw quickstart`. Your config lives at ~/.zeroclaw/config.toml —
+# copy this file there (or merge the blocks below into yours).
+#
+# Verify on your machine — framework flags/paths move fast.
+
+[providers.models.local]
+kind = "openai-compatible"
+base_url = "http://localhost:11434/v1"
+model = "granite4:micro"
+api_key = "not-needed"
+
+# Frontier upgrade path: uncomment, export ANTHROPIC_API_KEY, and route the
+# prioritizer's "strong" calls here while everything else stays local.
+# [providers.models.anthropic]
+# kind = "anthropic"
+# model = "claude-sonnet-4-6"
+# api_key = "env:ANTHROPIC_API_KEY"

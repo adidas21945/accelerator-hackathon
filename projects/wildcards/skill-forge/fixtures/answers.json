@@ -1,0 +1,14 @@
+{
+  "job": "Write customer-support replies for a small bike shop covering repairs, returns, and order-status questions.",
+  "name-hint": "support-reply",
+  "defaults": [
+    "Tone is warm, plain English, no corporate filler",
+    "Replies stay under 120 words unless the customer asked multiple questions"
+  ],
+  "gotchas": [
+    "Never promise a repair completion date the ticket does not already state",
+    "Refunds go to the original payment method only - never offer store credit as a substitute"
+  ],
+  "output_sections": ["Reply", "Internal note", "Next action"],
+  "triggers": ["customer reply", "support ticket", "bike shop email", "refund or return question"]
+}

@@ -1,0 +1,206 @@
+{
+  "project": "dungeon-mastah",
+  "provider": "local",
+  "model_hint": "",
+  "modes": {
+    "with_skill": {
+      "passed": 2,
+      "total": 3,
+      "pass_rate": 0.67,
+      "cost_usd": 0.0,
+      "latency_s_avg": 6.96
+    },
+    "without_skill": {
+      "passed": 0,
+      "total": 3,
+      "pass_rate": 0.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 7.59
+    }
+  },
+  "results": [
+    {
+      "case": "brownstone-opening",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Scene': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Party status': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Your options': present"
+        },
+        {
+          "type": "count_min",
+          "ok": true,
+          "evidence": "'^\\\\s*\\\\d+\\\\.' in section 'Your options': found 3, need >= 2"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Party status': present"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 8.58,
+      "output_path": "evals/outputs/brownstone-opening-with_skill.md"
+    },
+    {
+      "case": "brownstone-opening",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Scene': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Party status': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Your options': MISSING"
+        },
+        {
+          "type": "count_min",
+          "ok": false,
+          "evidence": "'^\\\\s*\\\\d+\\\\.' in section 'Your options': found 0, need >= 2"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'Party status': MISSING"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 15.79,
+      "output_path": "evals/outputs/brownstone-opening-without_skill.md"
+    },
+    {
+      "case": "crowbar-charge",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)\\\\b\\\\d{1,2}d(4|6|8|10|12|20|100)\\\\b|\\\\broll' in section 'Scene': found"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Party status': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Your options': present"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 7.24,
+      "output_path": "evals/outputs/crowbar-charge-with_skill.md"
+    },
+    {
+      "case": "crowbar-charge",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)\\\\b\\\\d{1,2}d(4|6|8|10|12|20|100)\\\\b|\\\\broll' in section 'Scene': found"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Party status': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Your options': MISSING"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 4.42,
+      "output_path": "evals/outputs/crowbar-charge-without_skill.md"
+    },
+    {
+      "case": "study-search-no-cheap-death",
+      "mode": "with_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Scene': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Your options': present"
+        },
+        {
+          "type": "count_min",
+          "ok": false,
+          "evidence": "'^\\\\s*\\\\d+\\\\.' in section 'Your options': found 0, need >= 2"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)you (are )?dead|you die|game over|total party kill': absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 5.05,
+      "output_path": "evals/outputs/study-search-no-cheap-death-with_skill.md"
+    },
+    {
+      "case": "study-search-no-cheap-death",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Scene': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Your options': MISSING"
+        },
+        {
+          "type": "count_min",
+          "ok": false,
+          "evidence": "'^\\\\s*\\\\d+\\\\.' in section 'Your options': found 0, need >= 2"
+        },
+        {
+          "type": "not_regex",
+          "ok": true,
+          "evidence": "forbidden '(?i)you (are )?dead|you die|game over|total party kill': absent (good)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 2.56,
+      "output_path": "evals/outputs/study-search-no-cheap-death-without_skill.md"
+    }
+  ],
+  "delta": {
+    "pass_rate": 0.67
+  }
+}

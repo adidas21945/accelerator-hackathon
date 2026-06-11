@@ -1,0 +1,37 @@
+{
+  "skill": "skills/recipe-card",
+  "runs": ["with_skill", "without_skill"],
+  "cases": [
+    {
+      "id": "zero-proof-by-default",
+      "input": "Something refreshing with mint and lime for a hot day.",
+      "assertions": [
+        {"type": "contains_section", "value": "The drink"},
+        {"type": "contains_section", "value": "You need"},
+        {"type": "contains_section", "value": "Build it"},
+        {"type": "not_regex", "value": "(?i)\\b(rum|vodka|gin|whiskey|whisky|tequila|bourbon)\\b", "where": "You need", "why": "nobody asked for alcohol — zero-proof is the default, not an option"},
+        {"type": "numeric_present", "where": "You need", "why": "every ingredient carries a measure"}
+      ]
+    },
+    {
+      "id": "boozy-when-asked",
+      "input": "Make me a proper boozy margarita.",
+      "assertions": [
+        {"type": "contains_section", "value": "Switch it"},
+        {"type": "regex", "value": "(?i)tequila", "where": "You need", "why": "an explicit cocktail request gets the real spirit"},
+        {"type": "count_min", "pattern": "^\\s*\\d+\\.", "min": 3, "where": "Build it", "why": "a real build has at least three numbered steps"}
+      ]
+    },
+    {
+      "id": "pantry-scraps-invention",
+      "input": "I only have orange juice, soda water, and grenadine. What can you make me?",
+      "assertions": [
+        {"type": "contains_section", "value": "The drink"},
+        {"type": "contains_section", "value": "You need"},
+        {"type": "regex", "value": "(?i)orange juice|soda water|grenadine", "where": "You need", "why": "the drink is built from what the user actually has"},
+        {"type": "not_regex", "value": "(?i)\\b(rum|vodka|gin|whiskey|whisky|tequila|bourbon)\\b", "where": "You need", "why": "no alcohol was requested and none is on hand"},
+        {"type": "numeric_present", "where": "You need", "why": "measures survive even in invention mode"}
+      ]
+    }
+  ]
+}

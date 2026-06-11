@@ -1,0 +1,45 @@
+{
+  "skill": "skills/civic-brief",
+  "runs": ["with_skill", "without_skill"],
+  "cases": [
+    {
+      "id": "rodents-by-neighborhood",
+      "input": "Which neighborhoods had the most rodent 311 complaints in Boston last year?",
+      "assertions": [
+        {"type": "contains_section", "value": "Headline finding"},
+        {"type": "contains_section", "value": "The data"},
+        {"type": "contains_section", "value": "What we found"},
+        {"type": "contains_section", "value": "Caveats"},
+        {"type": "contains_section", "value": "Reproduce it"},
+        {"type": "numeric_present", "where": "Headline finding", "why": "the headline must carry a number"},
+        {"type": "regex", "value": "data\\.boston\\.gov", "where": "The data", "why": "the brief must cite the source dataset on data.boston.gov"},
+        {"type": "regex", "value": "(?i)roxbury", "why": "Roxbury tops the deduplicated rodent tally in the data"},
+        {"type": "count_min", "pattern": "^(?:[-*]|\\d+\\.) ", "min": 2, "where": "Caveats", "why": "at least two real caveats (any list marker)"}
+      ]
+    },
+    {
+      "id": "cases-by-neighborhood",
+      "input": "How many 311 cases were there by neighborhood in Boston over the last year?",
+      "assertions": [
+        {"type": "contains_section", "value": "Headline finding"},
+        {"type": "contains_section", "value": "The data"},
+        {"type": "contains_section", "value": "Reproduce it"},
+        {"type": "regex", "value": "(?i)https?://|SELECT", "where": "Reproduce it", "why": "the brief ends with a runnable query"},
+        {"type": "numeric_present", "where": "What we found", "why": "findings carry numbers"},
+        {"type": "not_regex", "value": "(?i)i (do not|don't|cannot|can't) (have )?(access|the data|real-?time)", "why": "the agent must use its tools, not beg off"}
+      ]
+    },
+    {
+      "id": "top-complaint-types",
+      "input": "What are the most common types of 311 complaints in Boston?",
+      "assertions": [
+        {"type": "contains_section", "value": "Headline finding"},
+        {"type": "contains_section", "value": "What we found"},
+        {"type": "contains_section", "value": "Caveats"},
+        {"type": "regex", "value": "(?i)rodent", "where": "What we found", "why": "Rodent Activity is the top complaint type in the data"},
+        {"type": "numeric_present", "where": "Headline finding"},
+        {"type": "count_min", "pattern": "^(?:[-*]|\\d+\\.) .*\\d", "min": 3, "where": "What we found", "why": "3-5 quantified findings (any list marker)"}
+      ]
+    }
+  ]
+}

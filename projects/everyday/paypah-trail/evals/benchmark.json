@@ -1,0 +1,206 @@
+{
+  "project": "paypah-trail",
+  "provider": "local",
+  "model_hint": "",
+  "modes": {
+    "with_skill": {
+      "passed": 3,
+      "total": 3,
+      "pass_rate": 1.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 82.96
+    },
+    "without_skill": {
+      "passed": 0,
+      "total": 3,
+      "pass_rate": 0.0,
+      "cost_usd": 0.0,
+      "latency_s_avg": 109.82
+    }
+  },
+  "results": [
+    {
+      "case": "monthly-summary",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Summary': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'By category': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Ledger': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Flags': present"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Summary': present"
+        },
+        {
+          "type": "script",
+          "ok": true,
+          "evidence": "script evals/check_csv.py: exit 0 check_csv: ok (6 ledger rows)"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 39.36,
+      "output_path": "evals/outputs/monthly-summary-with_skill.md"
+    },
+    {
+      "case": "monthly-summary",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Summary': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'By category': present"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Ledger': MISSING"
+        },
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Flags': MISSING"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Summary': present"
+        },
+        {
+          "type": "script",
+          "ok": false,
+          "evidence": "script evals/check_csv.py: exit 1 check_csv: FAIL \u2014 no ```csv fenced block found"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 160.38,
+      "output_path": "evals/outputs/monthly-summary-without_skill.md"
+    },
+    {
+      "case": "top-category",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Summary': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)groceries' in section 'Summary': found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": true,
+          "evidence": "number in section 'Summary': present"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 141.94,
+      "output_path": "evals/outputs/top-category-with_skill.md"
+    },
+    {
+      "case": "top-category",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Summary': MISSING"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)groceries' in section 'Summary': NOT found"
+        },
+        {
+          "type": "numeric_present",
+          "ok": false,
+          "evidence": "number in section 'Summary': MISSING"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 123.11,
+      "output_path": "evals/outputs/top-category-without_skill.md"
+    },
+    {
+      "case": "duplicate-hunt",
+      "mode": "with_skill",
+      "pass": true,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": true,
+          "evidence": "section 'Flags': present"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)duplicate' in section 'Flags': found"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)beacon hill beans': found"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 67.59,
+      "output_path": "evals/outputs/duplicate-hunt-with_skill.md"
+    },
+    {
+      "case": "duplicate-hunt",
+      "mode": "without_skill",
+      "pass": false,
+      "checks": [
+        {
+          "type": "contains_section",
+          "ok": false,
+          "evidence": "section 'Flags': MISSING"
+        },
+        {
+          "type": "regex",
+          "ok": false,
+          "evidence": "regex '(?i)duplicate' in section 'Flags': NOT found"
+        },
+        {
+          "type": "regex",
+          "ok": true,
+          "evidence": "regex '(?i)beacon hill beans': found"
+        }
+      ],
+      "cost_usd": 0.0,
+      "latency_s": 45.97,
+      "output_path": "evals/outputs/duplicate-hunt-without_skill.md"
+    }
+  ],
+  "delta": {
+    "pass_rate": 1.0
+  }
+}
