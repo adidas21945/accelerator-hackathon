@@ -1,0 +1,28 @@
+[project]
+name = "agentday-example"
+version = "0.1.0"
+description = "Starter agents + skills for TOA Agent Build Day — pick a lane, pick your models, ship a skill."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+    "openai>=2.0",
+    "requests>=2.31",
+    "pyyaml>=6.0",
+    "feedparser>=6.0",
+    "icalendar>=6.0",
+    "pypdf>=5.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "skills-ref>=0.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["agentkit"]

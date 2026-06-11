@@ -1,0 +1,43 @@
+# project-name — One-Line Hook
+
+> Theme: ... · Lane: L1/L3 · Difficulty: 🦞..🦞🦞🦞 · Offline: fully/fixtures · Keys: none
+
+## Pitch
+
+Two or three sentences: who this agent helps, what it does end-to-end, and
+why the skill (not just the model) is doing the heavy lifting.
+
+## Quickstart
+
+```bash
+# from the repo root — local model by default (see docs/SETUP.md)
+uv run python projects/<theme>/<name>/agent.py "your task here"
+
+# without the skill (the eval baseline), or fully offline:
+uv run python projects/<theme>/<name>/agent.py "your task" --no-skill
+uv run python projects/<theme>/<name>/agent.py "your task" --offline
+
+# the house evals (always offline, writes evals/benchmark.json):
+uv run python -m agentkit.evals projects/<theme>/<name>
+```
+
+## Demo script (90 seconds)
+
+1. Say the one-liner. Run the agent on the canned input.
+2. Show the skill's output template doing its job in the result.
+3. Run the evals; show the with-skill vs without-skill delta in benchmark.json.
+4. Offline variant: `--offline` — same demo, no wifi, no keys.
+
+## Make it yours (extension ideas)
+
+- 3-5 concrete forks an attendee could ship by 5 PM, ordered by ambition.
+
+## Rubric mapping
+
+| Criterion (pts) | Where this starter already scores | What you still must do |
+|---|---|---|
+| Shippability (25) | runs from README; MIT; `skills-ref validate` passes | your public repo + README |
+| ADLC (20) | docs/ADLC.md worked example; evals loop wired | re-run the loop on YOUR change |
+| Model Selection (20) | docs/MODEL_SELECTION.md with measured local numbers | add your frontier numbers + rationale |
+| Lane Merit (20) | end-to-end on a realistic input | your twist |
+| Skill Quality (15) | triggers, defaults, gotchas, output template, eval delta | keep the delta positive |

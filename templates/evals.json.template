@@ -1,0 +1,18 @@
+{
+  "skill": "skills/REPLACE-skill-dir",
+  "runs": ["with_skill", "without_skill"],
+  "cases": [
+    {
+      "id": "unique-case-id",
+      "input": "the task string the agent will receive",
+      "assertions": [
+        {"type": "contains_section", "value": "Section name"},
+        {"type": "regex", "value": "pattern", "where": "Section name", "why": "what this proves"},
+        {"type": "not_regex", "value": "forbidden pattern"},
+        {"type": "count_min", "pattern": "^- ", "min": 2, "where": "Section name"},
+        {"type": "numeric_present", "where": "Section name"},
+        {"type": "script", "path": "evals/check_something.py"}
+      ]
+    }
+  ]
+}

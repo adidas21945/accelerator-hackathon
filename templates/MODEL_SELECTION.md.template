@@ -1,0 +1,16 @@
+# Model Selection — <project>
+
+| Task | Model | Tier | Why (cost / latency / quality) |
+|---|---|---|---|
+| <planning/synthesis> | <e.g. claude-sonnet-4-6> | frontier | quality-bound: <evidence> |
+| <templating/extraction> | <e.g. granite / llama3.1 via local endpoint> | local | cost/latency-bound; data stays on-device |
+
+**Measured** on `<eval case>` (from `evals/benchmark.json` and the run footer):
+
+| Config | $ / run | latency / run | eval pass rate |
+|---|---|---|---|
+| local-only | $0.00 | <s> | <n>/<m> |
+| frontier (<model>) | $<x> | <s> | <n>/<m> |
+
+Routing implemented: <static per-task | cascade (agentkit.route) | none>.
+Rejected: <option> because <reason> — saying why you DIDN'T route is also a rationale.

@@ -1,0 +1,37 @@
+---
+name: REPLACE-with-dir-name
+description: >-
+  WHAT this skill does in one clause, then WHEN to use it with trigger
+  keywords an agent would actually see in a task. Example: "Formats analysis
+  of X into the standard Y brief. Use whenever answering questions about
+  X, Y-reports, or Z that should be presented for a non-technical audience."
+license: MIT
+---
+
+# REPLACE: Skill Title
+
+One paragraph: the job this skill does, completely. A skill is a coherent
+unit of work an expert actually performs — not "help with documents."
+
+## Defaults (do not present options)
+
+- Pick ONE way to do each thing and state it. Menus are the #1 skill failure.
+- Example: "Date ranges default to the last 12 complete months."
+
+## Workflow
+
+1. Numbered, imperative steps.
+2. If a step needs a script: "Run `python scripts/foo.py <input>` — never
+   attempt X by hand; the script handles A and B."
+
+## Gotchas
+
+- The traps an expert knows. Each one earns Skill Quality points.
+- Example: "The current month is always incomplete — exclude it and say so."
+
+## Output template
+
+Produce EXACTLY these sections, in this order (template in assets/ if long):
+
+1. **Section one** — what goes here, one sentence, includes a number.
+2. **Section two** — ...

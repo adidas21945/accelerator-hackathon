@@ -1,0 +1,22 @@
+# ADLC Worksheet — <project>
+
+## 1. Scope
+Task, user, single end-to-end success case. Out of scope (be brutal).
+
+## 2. Design
+Agents/skills diagram (ASCII is fine). Model per task + why → seeds MODEL_SELECTION.md.
+
+## 3. Build
+Harness, repo, license. What was vibe-coded vs engineered.
+
+## 4. Evaluate  ← run this loop at least once
+Cases in evals/evals.json. With/without-skill pass rates from benchmark.json.
+
+## 5. Deploy
+How a stranger runs it from the README in <5 min.
+
+## 6. Observe  ←
+What's instrumented (the run footer: tokens/cost/latency/turns). One thing a trace taught you.
+
+## 7. Iterate
+What the evaluate/observe loop changed. What you'd do with day two.
