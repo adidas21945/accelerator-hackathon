@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Sync dependencies
+        run: uv sync
+
+      # Mirrors tests/verify.sh — the no-model matrix. The model-dependent
+      # checks (each project answering, eval pass-rate deltas) need a local
+      # model and run on a laptop via `make smoke`, not in CI.
+      - name: Unit tests
+        run: uv run pytest tests/ -q
+
+      - name: Eval engine selftest
+        run: uv run python -m agentkit.evals --selftest
+
+      - name: Validate every skill
+        run: |
+          fail=0
+          for d in $(find projects -name SKILL.md -exec dirname {} \;); do
+            echo "validating $d"
+            uv run agentskills validate "$d" || fail=1
+          done
+          exit $fail
+
+      - name: Deterministic script selftests
+        run: |
+          uv run python projects/everyday/paypah-trail/skills/expense-report/scripts/parse_receipt.py --selftest
+          uv run python projects/fun/dungeon-mastah/skills/campaign-rules/scripts/roll.py --selftest
+
+      - name: README lint
+        run: uv run python tools/lint_readmes.py
+
+      - name: Deploy config parses
+        run: uv run python -c "import tomllib,pathlib; tomllib.loads(pathlib.Path('projects/chief-of-staff/chief-of-stuff/deploy/zeroclaw/config.toml').read_text())"

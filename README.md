@@ -4,6 +4,7 @@
 
 # AgentDay-Example
 
+[![CI](https://github.com/holzerjm/AgentDay-Example/actions/workflows/ci.yml/badge.svg)](https://github.com/holzerjm/AgentDay-Example/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-3DA639)](LICENSE)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776AB?logo=python&logoColor=white)
 ![TOA Agent Build Day](https://img.shields.io/badge/TOA%20Agent%20Build%20Day-Jun%2027%2C%202026-CC0000)
@@ -111,7 +112,8 @@ before the event; fork them during it.
 [Lane 2 playbook (fork BriefingClaw)](docs/LANE2-PLAYBOOK.md) ·
 [Ten more project ideas](docs/ideas-appendix.md) ·
 [Printable cheat sheet (PDF)](docs/cheat-sheet.pdf) ·
-[Templates](templates/)
+[Templates](templates/) ·
+[Contributing — add your own starter](CONTRIBUTING.md)
 
 Reference architecture for the event:
 [BriefingClaw](https://github.com/holzerjm/GACEP-Spring-2026-demo) — the

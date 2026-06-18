@@ -58,10 +58,18 @@ def cascade(
     first = llm.chat(task, system=system, provider=cheap[0], tier=cheap[1])
     confidence, grade = self_grade(task, first.text, provider=cheap[0])
     attempts = [first, grade]
-    escalated = confidence < threshold
-    if escalated:
-        final = llm.chat(task, system=system, provider=strong[0], tier=strong[1])
-        attempts.append(final)
+    escalated, note = False, "confidence above threshold — stayed cheap"
+    if confidence < threshold:
+        try:
+            final = llm.chat(task, system=system, provider=strong[0], tier=strong[1])
+            attempts.append(final)
+            escalated, note = True, "escalated to strong tier"
+        except Exception as e:  # noqa: BLE001
+            # Graceful degradation: a missing strong-tier key (or an
+            # unreachable endpoint) keeps the cheap answer instead of
+            # crashing the run — the table_row note records what happened.
+            note = (f"wanted to escalate ({confidence:.2f} < {threshold}) but "
+                    f"strong tier unavailable: {type(e).__name__}")
     text = attempts[-1].text if escalated else first.text
     cost = round(sum(a.cost_usd for a in attempts), 6)
     return RouteResult(
@@ -76,5 +84,6 @@ def cascade(
             "confidence": round(confidence, 2),
             "cost_usd": cost,
             "latency_s": round(sum(a.latency_s for a in attempts), 2),
+            "note": note,
         },
     )

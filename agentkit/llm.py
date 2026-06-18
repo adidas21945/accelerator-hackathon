@@ -89,6 +89,7 @@ class ChatResult(NamedTuple):
     usage: dict  # {"prompt_tokens": int, "completion_tokens": int}
     latency_s: float
     cost_usd: float
+    tier: str = "default"  # which tier served this call — build routing tables for free
 
 
 def _load_dotenv() -> None:
@@ -186,6 +187,7 @@ def chat_raw(
         usage=usage,
         latency_s=latency,
         cost_usd=estimate_cost(handle.model, usage),
+        tier=handle.tier,
     )
 
 

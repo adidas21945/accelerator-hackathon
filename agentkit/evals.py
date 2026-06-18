@@ -204,8 +204,12 @@ def run_evals(
                 bench["modes"]["with_skill"]["pass_rate"]
                 - bench["modes"]["without_skill"]["pass_rate"], 2)
         }
-    (project_dir / "evals" / "benchmark.json").write_text(json.dumps(bench, indent=2), encoding="utf-8")
-    print(f"\nwrote {project_dir / 'evals' / 'benchmark.json'}")
+    # A limited run (--cases N) must not clobber the committed full benchmark.
+    partial = limit is not None and limit < len(spec["cases"])
+    bench["partial"] = partial
+    out = project_dir / "evals" / ("benchmark.partial.json" if partial else "benchmark.json")
+    out.write_text(json.dumps(bench, indent=2), encoding="utf-8")
+    print(f"\nwrote {out}" + ("  (partial — committed benchmark.json left intact)" if partial else ""))
     for mode, s in bench["modes"].items():
         print(f"  {mode:>14}: {s['passed']}/{s['total']} pass  (${s['cost_usd']}, avg {s['latency_s_avg']}s)")
     if "delta" in bench:

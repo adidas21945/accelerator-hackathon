@@ -105,3 +105,49 @@ def test_script_assertion(tmp_path):
     (tmp_path / "ck.py").write_text("import sys,json; c=json.loads(sys.argv[1]); sys.exit(0 if 'Report' in sys.stdin.read() and c['id']=='t' else 1)\n")
     got = check(OUT, {"type": "script", "path": "ck.py"}, project_dir=tmp_path, case={"id": "t"})
     assert got.ok, got.evidence
+
+
+# ── routing (no live model — monkeypatch llm.chat) ─────────────────────────
+
+from agentkit import ChatResult, route  # noqa: E402
+
+
+def _cr(text):
+    return ChatResult(text=text, model="stub", provider="local",
+                      usage={"prompt_tokens": 1, "completion_tokens": 1}, latency_s=0.0, cost_usd=0.0)
+
+
+def test_chatresult_has_tier_default():
+    assert _cr("x").tier == "default"
+
+
+def test_cascade_stays_cheap_when_confident(monkeypatch):
+    seq = iter([_cr("the cheap answer"), _cr('{"confidence": 0.95}')])
+    monkeypatch.setattr(route.llm, "chat", lambda *a, **k: next(seq))
+    r = route.cascade("2+2?", threshold=0.7)
+    assert not r.escalated and r.text == "the cheap answer" and r.confidence >= 0.7
+
+
+def test_cascade_escalates_when_unsure(monkeypatch):
+    seq = iter([_cr("weak"), _cr('{"confidence": 0.2}'), _cr("the strong answer")])
+    monkeypatch.setattr(route.llm, "chat", lambda *a, **k: next(seq))
+    r = route.cascade("hard", threshold=0.7)
+    assert r.escalated and r.text == "the strong answer"
+
+
+def test_cascade_degrades_gracefully_without_strong_key(monkeypatch):
+    calls = {"n": 0}
+
+    def fake(*a, **k):
+        calls["n"] += 1
+        if calls["n"] == 1:
+            return _cr("local answer")
+        if calls["n"] == 2:
+            return _cr('{"confidence": 0.1}')
+        raise RuntimeError("ANTHROPIC_API_KEY is not set")  # no strong-tier key
+
+    monkeypatch.setattr(route.llm, "chat", fake)
+    r = route.cascade("hard", threshold=0.7)
+    assert not r.escalated  # never crashes
+    assert r.text == "local answer"  # keeps the cheap answer
+    assert "unavailable" in r.table_row["note"].lower()
