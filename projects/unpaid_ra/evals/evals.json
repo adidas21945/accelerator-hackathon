@@ -1,0 +1,26 @@
+{
+  "evals": [
+    {
+      "id": "summaries_structured",
+      "description": "All 5 paper summaries contain required structured fields",
+      "type": "schema_check",
+      "target": "summaries",
+      "required_keys": ["title", "contribution", "method", "limitation"]
+    },
+    {
+      "id": "gaps_cited",
+      "description": "Each identified gap cites at least one paper from the summaries",
+      "type": "reference_check",
+      "target": "gap_synthesis.open_questions",
+      "must_reference": "summaries[*].title"
+    },
+    {
+      "id": "routing_distributed",
+      "description": "At least 2 distinct model tiers used across the pipeline",
+      "type": "trace_check",
+      "target": "trace.jsonl",
+      "field": "assigned_model",
+      "min_distinct_values": 2
+    }
+  ]
+}

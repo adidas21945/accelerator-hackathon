@@ -1,0 +1,49 @@
+{"type": "agent_start", "ts": 1782578773.391567, "agent": "planner", "field": "ML models for stock return prediction"}
+{"type": "probe_start", "ts": 1782578773.3917499, "agent": "query_expansion", "model": "granite4:micro", "probe_tokens": 50}
+{"type": "probe_result", "ts": 1782578773.56962, "agent": "query_expansion", "confidence_scores": {"tier1": 0.0, "tier2": 1.0, "tier3": 0.0}}
+{"type": "routing_decision", "ts": 1782578773.569835, "agent": "query_expansion", "tier": "tier2", "assigned_model": "claude-haiku-4-5", "confidence_scores": {"tier1": 0.0, "tier2": 1.0, "tier3": 0.0}, "thresholds": {"tier1": 0.5, "tier2": 0.65, "tier3": 0.0}, "signal": "logprob_softmax"}
+{"type": "subtask_defined", "ts": 1782578773.570168, "name": "query_expansion", "assigned_model": "claude-haiku-4-5"}
+{"type": "subtask_defined", "ts": 1782578773.5702348, "name": "paper_fetch", "assigned_model": "mcp/fetch_papers"}
+{"type": "probe_start", "ts": 1782578773.5702899, "agent": "summarization", "model": "granite4:micro", "probe_tokens": 50}
+{"type": "probe_result", "ts": 1782578773.714973, "agent": "summarization", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}}
+{"type": "routing_decision", "ts": 1782578773.715179, "agent": "summarization", "tier": "tier3", "assigned_model": "claude-sonnet-4-6", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}, "thresholds": {"tier1": 0.5, "tier2": 0.65, "tier3": 0.0}, "signal": "logprob_softmax"}
+{"type": "subtask_defined", "ts": 1782578773.715542, "name": "summarization", "assigned_model": "claude-sonnet-4-6"}
+{"type": "probe_start", "ts": 1782578773.7156181, "agent": "gap_synthesis", "model": "granite4:micro", "probe_tokens": 50}
+{"type": "probe_result", "ts": 1782578773.859679, "agent": "gap_synthesis", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}}
+{"type": "routing_decision", "ts": 1782578773.859848, "agent": "gap_synthesis", "tier": "tier3", "assigned_model": "claude-sonnet-4-6", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}, "thresholds": {"tier1": 0.5, "tier2": 0.65, "tier3": 0.0}, "signal": "logprob_softmax"}
+{"type": "subtask_defined", "ts": 1782578773.86023, "name": "gap_synthesis", "assigned_model": "claude-sonnet-4-6"}
+{"type": "probe_start", "ts": 1782578773.860321, "agent": "idea_generation", "model": "granite4:micro", "probe_tokens": 50}
+{"type": "probe_result", "ts": 1782578774.000036, "agent": "idea_generation", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}}
+{"type": "routing_decision", "ts": 1782578774.000215, "agent": "idea_generation", "tier": "tier3", "assigned_model": "claude-sonnet-4-6", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}, "thresholds": {"tier1": 0.5, "tier2": 0.65, "tier3": 0.0}, "signal": "logprob_softmax"}
+{"type": "subtask_defined", "ts": 1782578774.0005162, "name": "idea_generation", "assigned_model": "claude-sonnet-4-6"}
+{"type": "agent_complete", "ts": 1782578774.000557, "agent": "planner", "subtasks": ["query_expansion", "paper_fetch", "summarization", "gap_synthesis", "idea_generation"]}
+{"type": "wave_start", "ts": 1782578774.001021, "wave": 1, "agents": ["query_expander"]}
+{"type": "agent_start", "ts": 1782578774.004972, "agent": "query_expander", "model": "claude-haiku-4-5", "field": "ML models for stock return prediction"}
+{"type": "agent_complete", "ts": 1782578774.005055, "agent": "query_expander", "model": "claude-haiku-4-5", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
+{"type": "wave_complete", "ts": 1782578774.005193, "wave": 1, "agents": ["query_expander"]}
+{"type": "wave_start", "ts": 1782578774.0052621, "wave": 2, "agents": ["paper_fetcher"]}
+{"type": "agent_start", "ts": 1782578774.005395, "agent": "paper_fetcher", "model": "mcp/fetch_papers", "query": "machine learning stock return prediction deep learning"}
+{"type": "fetch_attempt", "ts": 1782578774.005534, "query": "machine learning stock return prediction deep learning"}
+{"type": "papers_retrieved", "ts": 1782578774.005822, "count": 5, "tokens": 0, "cost": 0.0, "source": "fixture"}
+{"type": "agent_complete", "ts": 1782578774.0059588, "agent": "paper_fetcher", "model": "mcp/fetch_papers", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
+{"type": "wave_complete", "ts": 1782578774.0061572, "wave": 2, "agents": ["paper_fetcher"]}
+{"type": "wave_start", "ts": 1782578774.0062249, "wave": 3, "agents": ["summarizer", "summarizer", "summarizer", "summarizer", "summarizer"]}
+{"type": "agent_start", "ts": 1782578774.006507, "agent": "summarizer", "model": "claude-sonnet-4-6", "paper_title": "Temporal Fusion Transformers for Equity Return Forecasting: Cross-Sectional Evidence"}
+{"type": "agent_start", "ts": 1782578774.006548, "agent": "summarizer", "model": "claude-sonnet-4-6", "paper_title": "Graph Neural Networks for Factor Investing: Learning Latent Industry Structures"}
+{"type": "agent_start", "ts": 1782578774.0066712, "agent": "summarizer", "model": "claude-sonnet-4-6", "paper_title": "Language Models as Market Analysts: Extracting Alpha from Earnings Call Transcripts"}
+{"type": "agent_start", "ts": 1782578774.006918, "agent": "summarizer", "model": "claude-sonnet-4-6", "paper_title": "Regime-Aware Deep Reinforcement Learning for Dynamic Portfolio Allocation"}
+{"type": "agent_start", "ts": 1782578774.008227, "agent": "summarizer", "model": "claude-sonnet-4-6", "paper_title": "Alternative Data Integration in ML-Based Return Prediction: Satellite Imagery and Web Traffic"}
+{"type": "agent_complete", "ts": 1782578774.008045, "agent": "summarizer", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
+{"type": "agent_complete", "ts": 1782578774.009272, "agent": "summarizer", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
+{"type": "agent_complete", "ts": 1782578774.009807, "agent": "summarizer", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
+{"type": "agent_complete", "ts": 1782578774.010209, "agent": "summarizer", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
+{"type": "agent_complete", "ts": 1782578774.010855, "agent": "summarizer", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
+{"type": "wave_complete", "ts": 1782578774.011163, "wave": 3, "agents": ["summarizer", "summarizer", "summarizer", "summarizer", "summarizer"]}
+{"type": "wave_start", "ts": 1782578774.0112078, "wave": 4, "agents": ["gap_synthesizer"]}
+{"type": "agent_start", "ts": 1782578774.0112698, "agent": "gap_synthesizer", "model": "claude-sonnet-4-6", "paper_count": 5}
+{"type": "agent_complete", "ts": 1782578774.011609, "agent": "gap_synthesizer", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
+{"type": "wave_complete", "ts": 1782578774.0117629, "wave": 4, "agents": ["gap_synthesizer"]}
+{"type": "wave_start", "ts": 1782578774.011868, "wave": 5, "agents": ["idea_generator"]}
+{"type": "agent_start", "ts": 1782578774.011976, "agent": "idea_generator", "model": "claude-sonnet-4-6"}
+{"type": "agent_complete", "ts": 1782578774.0124218, "agent": "idea_generator", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
+{"type": "wave_complete", "ts": 1782578774.0125482, "wave": 5, "agents": ["idea_generator"]}

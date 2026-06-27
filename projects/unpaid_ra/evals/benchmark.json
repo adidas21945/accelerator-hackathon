@@ -1,0 +1,26 @@
+{
+  "run_id": "1782578774",
+  "assertions": [
+    {
+      "id": "summaries_structured",
+      "result": "PASS",
+      "detail": "5/5 summaries valid"
+    },
+    {
+      "id": "gaps_cited",
+      "result": "PASS",
+      "detail": "2/2 gaps cite sources"
+    },
+    {
+      "id": "routing_distributed",
+      "result": "PASS",
+      "detail": "2 distinct models: claude-haiku-4-5, claude-sonnet-4-6"
+    }
+  ],
+  "score": "3/3",
+  "routing_distribution": {
+    "claude-haiku-4-5": 1,
+    "mcp/fetch_papers": 1,
+    "claude-sonnet-4-6": 7
+  }
+}

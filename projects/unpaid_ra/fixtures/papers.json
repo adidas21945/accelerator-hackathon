@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Temporal Fusion Transformers for Equity Return Forecasting: Cross-Sectional Evidence",
+    "abstract": "We present a Temporal Fusion Transformer (TFT) architecture adapted for cross-sectional stock return prediction using multi-scale time-series features. Our model integrates macroeconomic indicators, firm-level accounting signals, and high-frequency market microstructure data. On a universe of S&P 1500 constituents from 2010-2022, the TFT achieves a monthly long-short portfolio Sharpe ratio of 1.84, outperforming LSTM and GRU baselines by 23%. We find that attention weights strongly emphasize earnings surprise and price momentum at the 21-day horizon. However, performance degrades during market stress periods, suggesting the model captures regime-dependent patterns that do not generalize to tail events.",
+    "year": 2023,
+    "authors": [{"name": "Sarah Chen"}, {"name": "Marcus Veltri"}, {"name": "Priya Nair"}],
+    "citationCount": 142,
+    "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4312109"
+  },
+  {
+    "title": "Graph Neural Networks for Factor Investing: Learning Latent Industry Structures",
+    "abstract": "We propose a Graph Neural Network (GNN) framework that jointly learns latent industry structure and stock return predictability from supply-chain relationships and co-movement correlations. Unlike pre-defined GICS classifications, our learned adjacency matrix adapts dynamically to evolving sector linkages. Applied to the Russell 2000 from 2015-2023, the GNN generates a top-quintile portfolio with annualized alpha of 8.3% over the Fama-French five-factor benchmark. Ablations confirm that learned edges outperform static industry graphs. A key limitation is computational overhead at inference: updating the adjacency matrix for 2000 stocks requires 4.2 seconds per rebalancing, which may be prohibitive for high-frequency applications.",
+    "year": 2023,
+    "authors": [{"name": "James Park"}, {"name": "Yuki Tanaka"}, {"name": "Elena Voronova"}],
+    "citationCount": 98,
+    "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4401237"
+  },
+  {
+    "title": "Language Models as Market Analysts: Extracting Alpha from Earnings Call Transcripts",
+    "abstract": "We fine-tune a large language model (LLM) on a curated corpus of 47,000 quarterly earnings call transcripts from 2005-2022 to predict post-earnings announcement drift. The model encodes nuanced managerial tone, hedging language, and question-answer dynamics that elude traditional sentiment dictionaries. Our LLM-based long-short portfolio generates a 5-day PEAD alpha of 1.92% per quarter with t-statistic 4.7, compared to 0.84% for FinBERT baselines. We document that the model is particularly effective for small-cap firms where analyst coverage is sparse. The primary limitation is data recency bias: the model requires fine-tuning quarterly to remain effective, adding significant operational overhead.",
+    "year": 2024,
+    "authors": [{"name": "David Kwan"}, {"name": "Ananya Singh"}, {"name": "Robert Mueller"}],
+    "citationCount": 67,
+    "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4588942"
+  },
+  {
+    "title": "Regime-Aware Deep Reinforcement Learning for Dynamic Portfolio Allocation",
+    "abstract": "We develop a regime-aware deep reinforcement learning (DRL) agent for dynamic stock portfolio allocation that explicitly conditions policy decisions on hidden Markov model (HMM) estimated market regimes. The agent learns separate neural policy heads for bull, bear, and high-volatility regimes, switching via a Bayesian online changepoint detector. Backtesting on global equity indices from 2000-2023, the regime-aware DRL achieves a Calmar ratio of 2.1 versus 0.9 for a regime-agnostic DRL baseline. Despite strong average performance, the method suffers from regime misclassification risk: transitions between regimes induce 3-5 day lag in policy adjustment, resulting in drawdowns of up to 12% during sudden market shocks such as the COVID-19 crash.",
+    "year": 2022,
+    "authors": [{"name": "Carlos Reyes"}, {"name": "Fatima Al-Hassan"}, {"name": "Thomas Bergmann"}],
+    "citationCount": 211,
+    "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4098321"
+  },
+  {
+    "title": "Alternative Data Integration in ML-Based Return Prediction: Satellite Imagery and Web Traffic",
+    "abstract": "This paper systematically evaluates the incremental return predictability from two alternative data sources — retail foot traffic derived from satellite imagery and corporate website visitor counts — when combined with conventional price-volume features in gradient-boosted tree models. We construct a monthly rebalanced portfolio of 500 US retail and e-commerce stocks from 2017-2023. Models augmented with alternative data achieve an out-of-sample IC of 0.067 versus 0.043 for the price-volume baseline, a 56% improvement. Foot traffic data contributes disproportionately for brick-and-mortar retailers, while web traffic is more predictive for pure-play e-commerce. The main limitation is data cost and survivorship: alternative data providers curate survivorship-biased panels that may overstate predictive power for live trading.",
+    "year": 2024,
+    "authors": [{"name": "Linh Nguyen"}, {"name": "Amir Reza Hosseini"}, {"name": "Sophie Marchetti"}],
+    "citationCount": 53,
+    "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4677815"
+  }
+]
