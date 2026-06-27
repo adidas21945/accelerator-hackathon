@@ -42,29 +42,38 @@ def run(subtask: dict, synthesis: dict) -> list[dict]:
     )
     open_questions = synthesis.get("open_questions", ["unexplored areas in the literature"])
 
+    # Wrap in a JSON object so json_mode works with OpenAI-compat clients
+    # (json_mode forces a JSON *object*, not array).
     user_msg = (
         f"Based on this literature synthesis:\n\n{gaps_text}\n\n"
-        "Propose 3 novel research directions. For each:\n"
+        "Propose exactly 3 novel research directions. Return a JSON object with key "
+        '"directions" containing an array of exactly 3 items. Each item must have:\n'
         "- direction: a clear research direction title\n"
-        "- experiments: exactly 3 high-level experiment sketches (methodology, not implementation)\n"
+        "- experiments: array of exactly 3 high-level experiment sketches (methodology, not implementation)\n"
         "- novelty_rationale: why this is new, referencing a specific gap from the synthesis\n\n"
-        'Return ONLY valid JSON array:\n'
-        '[{"direction": "...", "experiments": ["sketch1", "sketch2", "sketch3"], '
-        '"novelty_rationale": "...citing specific gap..."}, ...]'
+        'Return ONLY: {"directions": [{"direction": "...", "experiments": ["sketch1", "sketch2", "sketch3"], '
+        '"novelty_rationale": "...citing specific gap..."}, <2 more>]}'
     )
     messages = [{"role": "system", "content": system}, {"role": "user", "content": user_msg}]
 
+    tokens = 0
+    text = ""
     try:
         text, tokens = chat_with_model(model, messages, json_mode=True)
-        # Handle both array and wrapped object
+    except Exception:
+        pass
+
+    try:
         parsed = json.loads(text)
+        # Unwrap: accept {"directions": [...]} or a bare array
         if isinstance(parsed, dict):
-            result = parsed.get("directions", parsed.get("ideas", [parsed]))
+            raw = parsed.get("directions", parsed.get("ideas", list(parsed.values())))
+            if isinstance(raw, dict):
+                raw = [raw]
         else:
-            result = parsed
-        # Validate structure
+            raw = parsed if isinstance(parsed, list) else []
         validated = []
-        for idea in result:
+        for idea in raw:
             if not isinstance(idea, dict):
                 continue
             exps = idea.get("experiments", [])
@@ -78,10 +87,9 @@ def run(subtask: dict, synthesis: dict) -> list[dict]:
                 "experiments": exps[:3],
                 "novelty_rationale": rationale,
             })
-        result = validated or _fallback(open_questions)
+        result = validated if len(validated) >= 1 else _fallback(open_questions)
     except Exception:
         result = _fallback(open_questions)
-        tokens = 0
 
     elapsed = round(time.perf_counter() - t0, 2)
     actual_cost = round(tokens / 1000 * COST_PER_1K.get(model, 0.0), 6)
@@ -102,5 +110,23 @@ def _fallback(open_questions: list[str]) -> list[dict]:
                 "Ablation study: vary training window length from 1 to 10 years",
             ],
             "novelty_rationale": f"Addresses gap: '{gap[:80]}'. No prior work systematically benchmarks regime transfer.",
-        }
+        },
+        {
+            "direction": "Alternative data fusion for small-cap return prediction",
+            "experiments": [
+                "Compare satellite imagery vs web traffic features for retail stocks in a held-out 2023 test set",
+                "Measure incremental IC from each alternative data source added to a price-volume baseline",
+                "Survivorship-bias audit: re-run with and without point-in-time constituent filtering",
+            ],
+            "novelty_rationale": f"Addresses gap: '{gap[:80]}'. Existing work conflates data sources without isolating marginal value.",
+        },
+        {
+            "direction": "LLM-based earnings call analysis with causal probing",
+            "experiments": [
+                "Compare fine-tuned LLM vs in-context-learning on PEAD prediction across market cap quintiles",
+                "Causal ablation: mask Q&A section vs management remarks to isolate signal sources",
+                "Out-of-domain test: apply model trained on US transcripts to European earnings calls",
+            ],
+            "novelty_rationale": f"Addresses gap: '{gap[:80]}'. Prior LLM work lacks causal probing to isolate which transcript sections drive alpha.",
+        },
     ]

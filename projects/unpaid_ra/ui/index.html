@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UnpaidRA — Research Pipeline</title>
+<style>
+:root {
+  --bg:      #0d1117;
+  --surface: #161b22;
+  --surf2:   #1a1f27;
+  --border:  #30363d;
+  --text:    #e6edf3;
+  --muted:   #8b949e;
+  --accent:  #58a6ff;
+  --green:   #3fb950;
+  --yellow:  #d29922;
+  --orange:  #f0883e;
+  --purple:  #bc8cff;
+  --teal:    #00D4AA;
+  --t1:      #3fb950;
+  --t2:      #d29922;
+  --t3:      #58a6ff;
+  --font: "Inter", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; line-height: 1.5; }
+
+/* ── Layout shell ──────────────────────────────────────────── */
+.layout    { display: flex; flex-direction: column; height: 100vh; }
+.body-row  { display: flex; flex: 1; overflow: hidden; }
+
+/* ── Header ────────────────────────────────────────────────── */
+header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 20px; border-bottom: 1px solid var(--border);
+  background: var(--surface); flex-shrink: 0;
+}
+header h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+header h1 span { color: var(--accent); }
+#field-pill {
+  background: #1f2937; border: 1px solid var(--border); border-radius: 20px;
+  padding: 3px 10px; font-size: 12px; color: var(--muted);
+}
+.mode-badge {
+  margin-left: auto; font-size: 11px; font-weight: 600;
+  padding: 3px 9px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.mode-badge.replay { background: #1a2a1f; color: var(--green); border: 1px solid #2a4a2f; }
+.mode-badge.live   { background: #2a1a10; color: var(--orange); border: 1px solid #4a2a10; }
+.mode-badge.idle   { background: #1a1a2a; color: var(--muted);  border: 1px solid var(--border); }
+
+/* ── Chat panel (left 30%) ─────────────────────────────────── */
+.chat-panel {
+  width: 30%; min-width: 260px; max-width: 380px;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; background: var(--surface);
+}
+.chat-history {
+  flex: 1; overflow-y: auto; padding: 16px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.chat-empty {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 13px; text-align: center; padding: 20px;
+}
+.chat-bubble {
+  padding: 10px 13px; border-radius: 12px 12px 4px 12px;
+  background: var(--accent); color: #fff; font-size: 13px;
+  max-width: 90%; align-self: flex-end; word-break: break-word;
+}
+.chat-bubble.demo {
+  background: #1f2937; color: var(--muted);
+  border: 1px solid var(--border); font-style: italic;
+}
+.chat-replay-area { padding: 8px 16px; border-top: 1px solid var(--border); }
+#btn-replay {
+  width: 100%; padding: 7px; border-radius: 6px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--muted); font-size: 12px; cursor: pointer; transition: .15s;
+}
+#btn-replay:hover { border-color: var(--green); color: var(--green); }
+.chat-input-bar { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--border); }
+#chat-input {
+  flex: 1; padding: 8px 12px; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--bg);
+  color: var(--text); font-size: 13px; font-family: var(--font);
+  outline: none; transition: border-color .15s;
+}
+#chat-input:focus { border-color: var(--accent); }
+#chat-input::placeholder { color: var(--muted); }
+#btn-run {
+  padding: 8px 16px; border-radius: 6px;
+  border: 1px solid var(--accent); background: var(--accent);
+  color: #000; font-size: 13px; font-weight: 600; cursor: pointer; transition: .15s;
+}
+#btn-run:hover { background: #4090ee; }
+#btn-run:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ── Trace panel (right 70%) ────────────────────────────────── */
+.trace-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+#trace-placeholder {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 15px; text-align: center; padding: 40px;
+}
+#trace-placeholder p { max-width: 320px; line-height: 1.7; }
+
+/* ── Tab UI ─────────────────────────────────────────────────── */
+#tab-ui { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+.tab-strip {
+  display: flex; flex-shrink: 0; background: var(--surface);
+  border-bottom: 2px solid var(--border); overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-strip::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  display: flex; align-items: center; gap: 9px;
+  padding: 14px 22px; flex-shrink: 0;
+  border: none; border-bottom: 3px solid transparent; margin-bottom: -2px;
+  background: transparent; color: var(--muted);
+  font-size: 18px; font-family: var(--font); font-weight: 500;
+  cursor: pointer; white-space: nowrap; transition: color .15s;
+}
+.tab-btn:hover  { color: var(--text); }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--teal); }
+
+.tab-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+.tab-dot.running { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); animation: pulse 1.2s ease-in-out infinite; }
+.tab-dot.done    { background: var(--green); }
+.tab-dot.results { background: var(--teal); }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+
+.tab-body { flex: 1; overflow-y: auto; }
+
+.tab-content { display: none; flex-direction: column; gap: 16px; padding: 24px; }
+.tab-content.active { display: flex; }
+
+/* Wave 3 parallel grid */
+.wave-agents { display: flex; flex-direction: column; gap: 16px; }
+.wave-agents.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+/* ── Agent cards ─────────────────────────────────────────────── */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.ac {
+  min-height: 160px; padding: 24px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surf2);
+  animation: fadeIn 200ms ease; display: flex; flex-direction: column;
+}
+.ac.ac-t1  { border-color: #3fb950; background: rgba(63,185,80,0.04); }
+.ac.ac-t2  { border-color: #d29922; background: rgba(210,153,34,0.04); }
+.ac.ac-t3  { border-color: #58a6ff; background: rgba(88,166,255,0.04); }
+.ac.ac-mcp { border-color: #bc8cff; background: rgba(188,140,255,0.04); }
+
+.ac-header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.ac-name   { font-size: 20px; font-weight: 700; color: var(--text); }
+.ac-mbadge { font-size: 16px; font-family: var(--mono); white-space: nowrap; }
+.ac-mbadge.t1  { color: var(--t1); }
+.ac-mbadge.t2  { color: var(--t2); }
+.ac-mbadge.t3  { color: var(--t3); }
+.ac-mbadge.mcp { color: var(--purple); }
+
+.ac-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ac-divider  { height: 1px; background: var(--border); margin: 12px 0; }
+.ac-body     { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+
+/* Probe lines */
+.ac-probe-lbl { font-size: 16px; color: var(--muted); }
+
+/* Confidence bars */
+.conf-bars-row { display: flex; gap: 28px; flex-wrap: wrap; }
+.conf-tier     { display: flex; flex-direction: column; gap: 5px; }
+.conf-label    { font-size: 16px; font-weight: 600; color: var(--muted); }
+.conf-label strong { color: var(--text); }
+.c-t1 { color: var(--t1); }
+.c-t2 { color: var(--t2); }
+.c-t3 { color: var(--t3); }
+.conf-track { width: 120px; height: 16px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+.conf-fill  { height: 100%; border-radius: 4px; }
+.cf-t1 { background: var(--t1); }
+.cf-t2 { background: var(--t2); }
+.cf-t3 { background: var(--t3); }
+
+/* Decision + status */
+.ac-decision { font-size: 18px; font-weight: 700; color: var(--text); }
+.ac-dmodel   { color: var(--accent); font-family: var(--mono); }
+.ac-status   { font-size: 16px; color: var(--muted); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+.ac-status.done { color: var(--green); }
+.ac-stats    { font-size: 16px; font-family: var(--mono); display: flex; gap: 16px; }
+
+.spinner {
+  display: inline-block; width: 13px; height: 13px;
+  border: 2px solid var(--border); border-top-color: var(--yellow);
+  border-radius: 50%; animation: spin .8s linear infinite; flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Results tab ─────────────────────────────────────────────── */
+.results-hdr  { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.results-title { font-size: 24px; font-weight: 700; color: var(--teal); }
+.results-field { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+.copy-ideas-btn {
+  flex-shrink: 0; padding: 8px 18px; border-radius: 6px;
+  border: 1px solid var(--teal); background: transparent;
+  color: var(--teal); font-size: 14px; font-weight: 600; cursor: pointer; transition: .15s;
+}
+.copy-ideas-btn:hover { background: rgba(0,212,170,0.1); }
+
+/* Idea cards */
+.idea-card {
+  border-left: 4px solid var(--teal); background: #0f1a28;
+  border-radius: 0 8px 8px 0; padding: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.idea-dir-lbl    { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--teal); opacity: .7; }
+.idea-title      { font-size: 22px; font-weight: 700; color: var(--teal); line-height: 1.3; }
+.idea-sec        { display: flex; flex-direction: column; gap: 6px; }
+.idea-sec-lbl    { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+.idea-novelty    { font-size: 16px; color: var(--text); line-height: 1.6; }
+.idea-exp-list   { padding-left: 22px; display: flex; flex-direction: column; gap: 6px; }
+.idea-exp-list li { font-size: 16px; color: #adb5bd; line-height: 1.6; }
+
+/* Metrics bar */
+.metrics-bar { display: flex; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.metric {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 28px 16px; gap: 8px; border-right: 1px solid var(--border);
+}
+.metric:last-child { border-right: none; }
+.metric-value { font-size: 48px; font-weight: 700; color: var(--teal); font-family: var(--mono); line-height: 1; }
+.metric-label { font-size: 16px; color: var(--muted); text-align: center; line-height: 1.4; }
+
+/* Routing distribution */
+.routing-dist {
+  font-size: 18px; font-family: var(--mono); text-align: center;
+  color: var(--muted); padding: 18px 24px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+footer {
+  display: flex; gap: 24px; align-items: center;
+  padding: 9px 20px; border-top: 1px solid var(--border);
+  background: var(--surface); flex-shrink: 0; font-size: 12px; color: var(--muted);
+}
+.stat { display: flex; gap: 6px; align-items: baseline; }
+.stat-val { font-size: 14px; font-weight: 600; color: var(--text); font-family: var(--mono); }
+.stat-val.green  { color: var(--green); }
+.stat-val.accent { color: var(--accent); }
+.footer-right { margin-left: auto; }
+#status-line { font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- Header -->
+<header>
+  <h1>Unpaid<span>RA</span></h1>
+  <div id="field-pill">—</div>
+  <span id="mode-badge" class="mode-badge idle">idle</span>
+</header>
+
+<!-- Body -->
+<div class="body-row">
+
+  <!-- Left: Chat -->
+  <div class="chat-panel">
+    <div class="chat-history" id="chat-history">
+      <div class="chat-empty" id="chat-empty">
+        <p>Enter a research field below to start the pipeline, or <strong>load the demo</strong> to replay a recorded run.</p>
+      </div>
+    </div>
+    <div class="chat-replay-area">
+      <button id="btn-replay">▶ Load Demo (replay)</button>
+    </div>
+    <div class="chat-input-bar">
+      <input id="chat-input" type="text" placeholder="Enter a research field…" autocomplete="off" spellcheck="false">
+      <button id="btn-run">Run</button>
+    </div>
+  </div>
+
+  <!-- Right: Trace -->
+  <div class="trace-panel">
+    <div id="trace-placeholder">
+      <p>Enter a research field to get started.</p>
+    </div>
+    <div id="tab-ui" style="display:none">
+      <div class="tab-strip" id="tab-strip"></div>
+      <div class="tab-body"  id="tab-body"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="stat"><span>Tokens</span><span class="stat-val accent" id="ft-tokens">—</span></div>
+  <div class="stat"><span>Cost</span><span class="stat-val" id="ft-cost">—</span></div>
+  <div class="stat"><span>Sonnet baseline</span><span class="stat-val" id="ft-sonnet">—</span></div>
+  <div class="stat"><span>Savings</span><span class="stat-val green" id="ft-savings">—</span></div>
+  <div class="stat"><span>Duration</span><span class="stat-val" id="ft-duration">—</span></div>
+  <div class="footer-right"><span id="status-line">Idle</span></div>
+</footer>
+</div>
+
+<script>
+// ── Constants ─────────────────────────────────────────────────
+const TAB_NAMES = {
+  1: "Query Expansion",
+  2: "Paper Fetch",
+  3: "Summarization",
+  4: "Gap Synthesis",
+  5: "Idea Generation",
+  results: "Results",
+};
+const AGENT_DISPLAY = {
+  query_expander:  "Query Expander",
+  paper_fetcher:   "Paper Fetcher",
+  summarizer:      "Summarizer",
+  gap_synthesizer: "Gap Synthesizer",
+  idea_generator:  "Idea Generator",
+  planner:         "Planner",
+};
+const AGENT_TO_ROUTING = {
+  query_expander:  "query_expansion",
+  summarizer:      "summarization",
+  gap_synthesizer: "gap_synthesis",
+  idea_generator:  "idea_generation",
+};
+const TIER_EMOJI  = { "granite4:micro": "🟢", "claude-haiku-4-5": "🟡", "claude-sonnet-4-6": "🔴" };
+const TIER_COLOR  = { "granite4:micro": "var(--t1)", "claude-haiku-4-5": "var(--t2)", "claude-sonnet-4-6": "var(--t3)" };
+
+// ── State ─────────────────────────────────────────────────────
+let es            = null;
+let currentField  = "";
+let currentWave   = 0;
+let tabs          = {};    // tabId → { btn, content, agentsDiv? }
+let activeTab     = null;
+let routingByAgent = {};   // routing_key → routing_decision event
+let pendingQueues = {};    // agent_name → [key, …] FIFO
+let modelCounts   = {};    // model → count (for routing distribution)
+let cardSeq       = 0;
+
+// ── Init ──────────────────────────────────────────────────────
+document.getElementById('btn-run').addEventListener('click', submitQuery);
+document.getElementById('btn-replay').addEventListener('click', startReplay);
+document.getElementById('chat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') submitQuery();
+});
+
+// ── User actions ──────────────────────────────────────────────
+function submitQuery() {
+  const inp   = document.getElementById('chat-input');
+  const field = inp.value.trim();
+  if (!field) return;
+  inp.value = '';
+  addChatBubble(field, 'user');
+  resetTracePanel();
+  setMode('live');
+  setStatus('Starting pipeline…');
+  document.getElementById('btn-run').disabled = true;
+
+  fetch('/run', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ field }),
+  })
+  .then(r => r.json())
+  .then(() => connectStream('/stream'))
+  .catch(() => {
+    setStatus('Failed to start agent');
+    setMode('idle');
+    document.getElementById('btn-run').disabled = false;
+  });
+}
+
+function startReplay() {
+  addChatBubble("ML models for stock return prediction", 'demo');
+  resetTracePanel();
+  setMode('replay');
+  setStatus('Replaying demo trace…');
+  connectStream('/replay');
+}
+
+function connectStream(url) {
+  if (es) { es.close(); es = null; }
+  document.getElementById('trace-placeholder').style.display = 'none';
+  document.getElementById('tab-ui').style.display = 'flex';
+  es = new EventSource(url);
+  es.onmessage = e => { try { handleEvent(JSON.parse(e.data)); } catch (_) {} };
+  es.onerror   = () => {
+    setStatus('Stream closed');
+    setMode('idle');
+    document.getElementById('btn-run').disabled = false;
+  };
+}
+
+// ── UI helpers ────────────────────────────────────────────────
+function resetTracePanel() {
+  tabs = {}; activeTab = null;
+  routingByAgent = {}; pendingQueues = {}; modelCounts = {};
+  cardSeq = 0; currentWave = 0;
+  document.getElementById('tab-strip').innerHTML = '';
+  document.getElementById('tab-body').innerHTML  = '';
+  document.getElementById('tab-ui').style.display          = 'none';
+  document.getElementById('trace-placeholder').style.display = 'flex';
+  document.getElementById('field-pill').textContent = '—';
+  ['ft-tokens','ft-cost','ft-sonnet','ft-savings','ft-duration'].forEach(id =>
+    document.getElementById(id).textContent = '—');
+}
+
+function addChatBubble(text, type) {
+  document.getElementById('chat-empty').style.display = 'none';
+  const b = document.createElement('div');
+  b.className   = 'chat-bubble' + (type === 'demo' ? ' demo' : '');
+  b.textContent = type === 'demo' ? `▶ demo: ${text}` : text;
+  document.getElementById('chat-history').appendChild(b);
+  b.scrollIntoView({ behavior: 'smooth' });
+}
+
+function setMode(m) {
+  const b = document.getElementById('mode-badge');
+  b.textContent = m; b.className = 'mode-badge ' + m;
+}
+function setStatus(msg) { document.getElementById('status-line').textContent = msg; }
+
+function updateFooter(ev) {
+  document.getElementById('ft-tokens').textContent  = (ev.total_tokens || 0).toLocaleString();
+  document.getElementById('ft-cost').textContent    = '$' + (ev.actual_cost || 0).toFixed(4);
+  document.getElementById('ft-sonnet').textContent  = '$' + (ev.sonnet_cost || 0).toFixed(4);
+  document.getElementById('ft-savings').textContent = ((ev.savings_pct || 0) * 100).toFixed(1) + '%';
+  document.getElementById('ft-duration').textContent= (ev.duration || 0).toFixed(1) + 's';
+}
+
+// ── Event dispatcher ──────────────────────────────────────────
+function handleEvent(ev) {
+  const t = ev.type;
+
+  if (t === 'stream_open') {
+    setStatus('Connected — waiting for planner…');
+    return;
+  }
+
+  if (t === 'agent_start' && ev.agent === 'planner') {
+    currentField = ev.field || '';
+    if (currentField) document.getElementById('field-pill').textContent = currentField;
+    setStatus('Planner routing agents…');
+    return;
+  }
+
+  if (t === 'agent_complete' && ev.agent === 'planner') {
+    setStatus('Planning complete — pipeline running');
+    return;
+  }
+
+  if (t === 'routing_decision') {
+    routingByAgent[ev.agent] = ev;
+    return;
+  }
+
+  if (t === 'wave_start') {
+    currentWave = ev.wave;
+    createTab(ev.wave, TAB_NAMES[ev.wave] || `Wave ${ev.wave}`);
+    setTabDot(ev.wave, 'running');
+    setStatus(`Wave ${ev.wave} — ${TAB_NAMES[ev.wave] || ''}…`);
+    return;
+  }
+
+  if (t === 'wave_complete') {
+    setTabDot(ev.wave, 'done');
+    return;
+  }
+
+  if (t === 'agent_start' && ev.agent !== 'planner') {
+    if (!currentWave) return;
+    const key        = `${ev.agent}-${++cardSeq}`;
+    const routingKey = AGENT_TO_ROUTING[ev.agent];
+    const routing    = routingKey ? routingByAgent[routingKey] : null;
+    createAgentCard(ev.agent, ev.model || '?', currentWave, key, routing, ev.paper_title || '');
+    if (!pendingQueues[ev.agent]) pendingQueues[ev.agent] = [];
+    pendingQueues[ev.agent].push(key);
+    return;
+  }
+
+  if (t === 'agent_complete' && ev.agent !== 'planner') {
+    const key = (pendingQueues[ev.agent] || []).shift();
+    if (key) setAgentDone(key, ev.tokens || 0, ev.actual_cost || 0, ev.latency || 0);
+    const model = ev.model || '';
+    if (model && !model.startsWith('mcp/')) {
+      modelCounts[model] = (modelCounts[model] || 0) + 1;
+    }
+    return;
+  }
+
+  if (t === 'papers_retrieved') {
+    setStatus(`Fetched ${ev.count} papers (${ev.source})`);
+    return;
+  }
+
+  if (t === 'run_complete') {
+    updateFooter(ev);
+    renderResults(ev);
+    setStatus(`Done — ${(ev.duration || 0).toFixed(1)}s`);
+    setMode('idle');
+    document.getElementById('btn-run').disabled = false;
+    if (es) { es.close(); es = null; }
+    return;
+  }
+}
+
+// ── Tab management ────────────────────────────────────────────
+function createTab(tabId, label) {
+  if (tabs[tabId]) return;
+
+  const btn = document.createElement('button');
+  btn.className = 'tab-btn';
+  btn.innerHTML = `<span class="tab-dot" id="td-${tabId}"></span>${esc(label)}`;
+  btn.addEventListener('click', () => switchTab(tabId));
+  document.getElementById('tab-strip').appendChild(btn);
+
+  const content = document.createElement('div');
+  content.className = 'tab-content';
+
+  let agentsDiv = null;
+  if (typeof tabId === 'number') {
+    agentsDiv = document.createElement('div');
+    agentsDiv.className = 'wave-agents' + (tabId === 3 ? ' grid-3' : '');
+    content.appendChild(agentsDiv);
+  }
+
+  document.getElementById('tab-body').appendChild(content);
+  tabs[tabId] = { btn, content, agentsDiv };
+  switchTab(tabId);
+}
+
+function switchTab(tabId) {
+  if (activeTab !== null && tabs[activeTab]) {
+    tabs[activeTab].btn.classList.remove('active');
+    tabs[activeTab].content.classList.remove('active');
+  }
+  activeTab = tabId;
+  if (tabs[tabId]) {
+    tabs[tabId].btn.classList.add('active');
+    tabs[tabId].content.classList.add('active');
+    tabs[tabId].btn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+  }
+}
+
+function setTabDot(tabId, state) {
+  const dot = document.getElementById(`td-${tabId}`);
+  if (dot) dot.className = 'tab-dot ' + state;
+}
+
+// ── Agent cards ───────────────────────────────────────────────
+function getTierInfo(model) {
+  if (model === 'granite4:micro')    return { cardCls: 'ac-t1', badgeCls: 't1' };
+  if (model === 'claude-haiku-4-5')  return { cardCls: 'ac-t2', badgeCls: 't2' };
+  if (model === 'claude-sonnet-4-6') return { cardCls: 'ac-t3', badgeCls: 't3' };
+  if (model.startsWith('mcp/'))      return { cardCls: 'ac-mcp', badgeCls: 'mcp' };
+  return { cardCls: 'ac-t1', badgeCls: 't1' };
+}
+
+function decisionReason(routing) {
+  const sc = routing.confidence_scores || {};
+  const t1 = sc.tier1 || 0, t2 = sc.tier2 || 0;
+  if (routing.tier === 'tier1') return `(p1=${t1.toFixed(2)} ≥ 0.50)`;
+  if (routing.tier === 'tier2') return `(p1=${t1.toFixed(2)}&lt;0.50, p2=${t2.toFixed(2)} ≥ 0.10)`;
+  return `(p1=${t1.toFixed(2)}&lt;0.50, p2=${t2.toFixed(2)}&lt;0.10 → fallback)`;
+}
+
+function buildProbeHtml(sc, routing) {
+  const t1 = sc.tier1 || 0, t2 = sc.tier2 || 0, t3 = sc.tier3 || 0;
+  return `
+    <div class="ac-probe-lbl">→ probe complete</div>
+    <div class="conf-bars-row">
+      <div class="conf-tier">
+        <div class="conf-label"><span class="c-t1">tier-1</span>: <strong>${t1.toFixed(2)}</strong></div>
+        <div class="conf-track"><div class="conf-fill cf-t1" style="width:${(t1*100).toFixed(1)}%"></div></div>
+      </div>
+      <div class="conf-tier">
+        <div class="conf-label"><span class="c-t2">tier-2</span>: <strong>${t2.toFixed(2)}</strong></div>
+        <div class="conf-track"><div class="conf-fill cf-t2" style="width:${(t2*100).toFixed(1)}%"></div></div>
+      </div>
+      <div class="conf-tier">
+        <div class="conf-label"><span class="c-t3">tier-3</span>: <strong>${t3.toFixed(2)}</strong></div>
+        <div class="conf-track"><div class="conf-fill cf-t3" style="width:${(t3*100).toFixed(1)}%"></div></div>
+      </div>
+    </div>
+    <div class="ac-decision">→ decision: <span class="ac-dmodel">${esc(routing.assigned_model)}</span> ✓ ${decisionReason(routing)}</div>`;
+}
+
+function createAgentCard(name, model, wave, key, routing, paperTitle) {
+  if (!tabs[wave]) return;
+  const tier        = getTierInfo(model);
+  const displayName = AGENT_DISPLAY[name] || name;
+  const sc          = routing ? (routing.confidence_scores || {}) : null;
+
+  let probeHtml = '';
+  if (sc) {
+    probeHtml = buildProbeHtml(sc, routing);
+  } else if (model.startsWith('mcp/')) {
+    probeHtml = `<div class="ac-probe-lbl">→ MCP tool — no router probe</div>`;
+  }
+
+  const subtitleHtml = paperTitle
+    ? `<div class="ac-subtitle" title="${esc(paperTitle)}">${esc(paperTitle)}</div>` : '';
+
+  const card = document.createElement('div');
+  card.className = `ac ${tier.cardCls}`;
+  card.id        = `ac-${key}`;
+  card.innerHTML = `
+    <div class="ac-header">
+      <span class="ac-name">${esc(displayName)}</span>
+      <span class="ac-mbadge ${tier.badgeCls}">${esc(model)}</span>
+    </div>
+    ${subtitleHtml}
+    <div class="ac-divider"></div>
+    <div class="ac-body">
+      ${probeHtml}
+      <div class="ac-status" id="ac-s-${key}">
+        <span class="spinner"></span> running…
+      </div>
+    </div>`;
+  tabs[wave].agentsDiv.appendChild(card);
+}
+
+function setAgentDone(key, tokens, cost, latency) {
+  const el = document.getElementById(`ac-s-${key}`);
+  if (!el) return;
+  el.className = 'ac-status done';
+  el.innerHTML = `✓ complete &nbsp;
+    <span class="ac-stats">
+      <span>${tokens.toLocaleString()} tok</span>
+      <span>$${cost.toFixed(4)}</span>
+      <span>${latency.toFixed(2)}s</span>
+    </span>`;
+}
+
+// ── Results tab ───────────────────────────────────────────────
+function renderResults(ev) {
+  createTab('results', TAB_NAMES.results);
+  setTabDot('results', 'results');
+
+  const ideas     = ev.ideas || [];
+  const field     = ev.field || currentField || '—';
+  const savings   = ((ev.savings_pct || 0) * 100).toFixed(1);
+  const cost      = (ev.actual_cost  || 0).toFixed(4);
+  const tokens    = (ev.total_tokens || 0).toLocaleString();
+  const evalScore = ev.eval_score || '—';
+  const content   = tabs['results'].content;
+
+  // Header + copy button
+  const hdr = document.createElement('div');
+  hdr.className = 'results-hdr';
+  hdr.innerHTML = `
+    <div>
+      <div class="results-title">Research Complete</div>
+      <div class="results-field">Field: ${esc(field)}</div>
+    </div>
+    <button class="copy-ideas-btn" id="copy-ideas-btn">Copy Ideas</button>`;
+  content.appendChild(hdr);
+
+  // Section 1 — Idea cards
+  if (!ideas.length) {
+    const p = document.createElement('p');
+    p.style.cssText = 'color:var(--muted);font-size:16px';
+    p.textContent   = 'Run live to see AI-generated research directions.';
+    content.appendChild(p);
+  } else {
+    ideas.forEach((idea, i) => {
+      const card = document.createElement('div');
+      card.className = 'idea-card';
+      const expsHtml = (idea.experiments || [])
+        .map(e => `<li>${esc(e)}</li>`).join('');
+      card.innerHTML = `
+        <div class="idea-dir-lbl">Direction ${i + 1}</div>
+        <div class="idea-title">${esc(idea.direction || 'Research Direction')}</div>
+        <div class="idea-sec">
+          <div class="idea-sec-lbl">Novelty</div>
+          <div class="idea-novelty">${esc(idea.novelty_rationale || '')}</div>
+        </div>
+        <div class="idea-sec">
+          <div class="idea-sec-lbl">Experiments</div>
+          <ol class="idea-exp-list">${expsHtml}</ol>
+        </div>`;
+      content.appendChild(card);
+    });
+  }
+
+  // Section 2 — Metrics bar
+  const metrics = document.createElement('div');
+  metrics.className = 'metrics-bar';
+  metrics.innerHTML = `
+    <div class="metric">
+      <div class="metric-value">${savings}%</div>
+      <div class="metric-label">Cost<br>Savings</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">$${cost}</div>
+      <div class="metric-label">Actual<br>Cost</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">${tokens}</div>
+      <div class="metric-label">Tokens<br>Total</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">${esc(evalScore)}</div>
+      <div class="metric-label">Evals<br>Passing</div>
+    </div>`;
+  content.appendChild(metrics);
+
+  // Section 3 — Routing distribution
+  const routingDiv = document.createElement('div');
+  routingDiv.className = 'routing-dist';
+  const parts = Object.entries(modelCounts)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([model, count]) =>
+      `${TIER_EMOJI[model] || ''} <span style="color:${TIER_COLOR[model] || 'var(--text)'}">${esc(model)}</span> ×${count}`)
+    .join('&emsp;&emsp;');
+  routingDiv.innerHTML = `Routing:&ensp;${parts || '—'}`;
+  content.appendChild(routingDiv);
+
+  document.getElementById('copy-ideas-btn').addEventListener('click', copyIdeas);
+}
+
+function copyIdeas() {
+  const lines = [`UnpaidRA Research Directions\nField: ${currentField}\n`];
+  document.querySelectorAll('.idea-card').forEach((card, i) => {
+    const title   = card.querySelector('.idea-title')?.textContent    || '';
+    const novelty = card.querySelector('.idea-novelty')?.textContent  || '';
+    const exps    = [...card.querySelectorAll('.idea-exp-list li')]
+                    .map((l, j) => `  ${j+1}. ${l.textContent}`).join('\n');
+    lines.push(`${i+1}. ${title}\nNovelty: ${novelty}\nExperiments:\n${exps}\n`);
+  });
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    const btn = document.getElementById('copy-ideas-btn');
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy Ideas', 2000); }
+  });
+}
+
+// ── Util ──────────────────────────────────────────────────────
+function esc(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

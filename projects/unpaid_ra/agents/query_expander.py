@@ -41,14 +41,19 @@ def run(subtask: dict) -> dict:
         {"role": "system", "content": _SYSTEM},
         {"role": "user", "content": _PROMPT_TMPL.format(field=field)},
     ]
+    tokens = 0
+    text = ""
     try:
         text, tokens = chat_with_model(model, messages, json_mode=True)
+    except Exception:
+        pass
+
+    try:
         result = json.loads(text)
         if "queries" not in result:
             result = _FALLBACK
     except Exception:
         result = _FALLBACK
-        tokens = 0
 
     elapsed = round(time.perf_counter() - t0, 2)
     actual_cost = round(tokens / 1000 * COST_PER_1K.get(model, 0.0), 6)

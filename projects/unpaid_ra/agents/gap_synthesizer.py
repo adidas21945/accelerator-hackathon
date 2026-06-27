@@ -57,13 +57,19 @@ def run(subtask: dict, summaries: list[dict]) -> dict:
     )
     messages = [{"role": "system", "content": system}, {"role": "user", "content": user_msg}]
 
+    tokens = 0
+    text = ""
     try:
         text, tokens = chat_with_model(model, messages, json_mode=True)
+    except Exception:
+        pass
+
+    try:
         result = json.loads(text)
         for key in ("themes", "contradictions", "open_questions"):
             if key not in result:
                 result[key] = []
-        # Ensure each theme/contradiction references a paper title
+        # Ensure each theme references a paper title
         for i, theme in enumerate(result.get("themes", [])):
             if not any(t.lower() in theme.lower() for t in titles):
                 result["themes"][i] = theme + f" [cite: {titles[0]}]"
@@ -77,7 +83,6 @@ def run(subtask: dict, summaries: list[dict]) -> dict:
                 f"Can {ref}-style approaches generalize beyond the training distribution?",
             ],
         }
-        tokens = 0
 
     elapsed = round(time.perf_counter() - t0, 2)
     actual_cost = round(tokens / 1000 * COST_PER_1K.get(model, 0.0), 6)

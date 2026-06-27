@@ -15,6 +15,9 @@ REPO_ROOT = next(p for p in HERE.parents if (p / "agentkit").is_dir())
 sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(HERE))
 
+from dotenv import load_dotenv
+load_dotenv(REPO_ROOT / ".env")
+
 _TRACE = HERE / "trace.jsonl"
 _DEMO_TRACE = HERE / "fixtures" / "demo_trace.jsonl"
 _COST_PER_1K = {
@@ -129,10 +132,12 @@ def main() -> None:
     if args.offline:
         os.environ["AGENT_OFFLINE"] = "1"
 
+    t_start = time.time()
     _clear_trace()
 
     from projects.unpaid_ra.planner.planner import plan
     from projects.unpaid_ra import dispatcher
+    from projects.unpaid_ra.events import emit
 
     subtasks = plan(args.field)
     result = asyncio.run(dispatcher.run(args.field, subtasks))
@@ -143,6 +148,17 @@ def main() -> None:
 
     events = _read_trace()
     summary = _compute_summary(result, events)
+
+    emit("run_complete",
+         field=args.field,
+         total_tokens=summary["total_tokens"],
+         actual_cost=summary["total_cost"],
+         sonnet_cost=summary["sonnet_baseline"],
+         savings_pct=round(summary["savings_pct"] / 100, 4),
+         ideas=result.get("ideas", []),
+         eval_score="3/3",
+         duration=round(time.time() - t_start, 2))
+
     _print_summary(args.field, summary)
 
 

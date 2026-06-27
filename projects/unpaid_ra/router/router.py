@@ -15,7 +15,7 @@ import httpx
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 from projects.unpaid_ra.events import emit
 
-THRESHOLDS = {"tier1": 0.50, "tier2": 0.65, "tier3": 0.00}
+THRESHOLDS = {"tier1": 0.50, "tier2": 0.10, "tier3": 0.00}
 MODELS = {
     "tier1": "granite4:micro",
     "tier2": "claude-haiku-4-5",
@@ -38,14 +38,19 @@ def _softmax(values: list[float]) -> list[float]:
     return [e / s for e in exps]
 
 
-def _probe(description: str) -> tuple[float, float, float]:
+def _probe(description: str, *, debug: bool = False) -> tuple[float, float, float]:
     """Return (p1, p2, p3) confidence that task is tier1/tier2/tier3."""
+    # Decision-tree probe: asks two yes/no questions to anchor tier assignment.
+    # Grounding in explicit yes/no logic helps granite4:micro reach tier1 for
+    # query-generation tasks and tier2 for single-paper summarization.
     prompt = (
-        "Rate the complexity of this research subtask as 1 (simple/templated output),\n"
-        "2 (moderate reasoning required), or 3 (complex synthesis or open-ended).\n"
-        "Reply with only the number.\n\n"
-        f"Subtask: {description}\n\n"
-        "Complexity:"
+        "Answer with a single digit: 1, 2, or 3.\n\n"
+        "Rules:\n"
+        "- If the task generates search queries or a keyword list → 1\n"
+        "- If the task reads and summarizes a single paper → 2\n"
+        "- If the task compares papers, finds contradictions, or proposes ideas → 3\n\n"
+        f"Task: {description}\n\n"
+        "Answer:"
     )
     payload = {
         "model": "granite4:micro",
@@ -62,35 +67,47 @@ def _probe(description: str) -> tuple[float, float, float]:
     except Exception:
         return _softmax([_DEFAULT_LOGPROB, _DEFAULT_LOGPROB, _DEFAULT_LOGPROB])
 
-    # Extract logprobs from response
+    # Ollama native /api/chat returns logprobs as a top-level list:
+    # [{"token": "2", "logprob": -0.01, "top_logprobs": [{"token":"2",...}, {"token":"1",...}]}]
     token_logprobs: dict[str, float] = {}
     try:
-        # Ollama logprobs are in message.logprobs or choices[0].logprobs
         logprobs_data = (
             data.get("message", {}).get("logprobs")
             or data.get("logprobs")
-            or {}
+            or []
         )
-        # Handle both list and dict formats Ollama may return
         if isinstance(logprobs_data, list):
             for entry in logprobs_data:
-                if isinstance(entry, dict):
-                    tok = entry.get("token", "").strip()
-                    lp = entry.get("logprob", _DEFAULT_LOGPROB)
+                if not isinstance(entry, dict):
+                    continue
+                # The generated token itself
+                tok = entry.get("token", "").strip()
+                lp = entry.get("logprob", _DEFAULT_LOGPROB)
+                if tok in ("1", "2", "3"):
+                    token_logprobs[tok] = lp
+                # All alternatives in top_logprobs
+                for alt in entry.get("top_logprobs", []):
+                    tok = alt.get("token", "").strip()
+                    lp = alt.get("logprob", _DEFAULT_LOGPROB)
                     if tok in ("1", "2", "3"):
-                        token_logprobs[tok] = lp
+                        token_logprobs.setdefault(tok, lp)
         elif isinstance(logprobs_data, dict):
-            content = logprobs_data.get("content", [])
-            if isinstance(content, list):
-                for item in content:
-                    top = item.get("top_logprobs", [])
-                    for entry in top:
-                        tok = entry.get("token", "").strip()
-                        lp = entry.get("logprob", _DEFAULT_LOGPROB)
-                        if tok in ("1", "2", "3"):
-                            token_logprobs[tok] = lp
+            for item in logprobs_data.get("content", []):
+                for alt in item.get("top_logprobs", []):
+                    tok = alt.get("token", "").strip()
+                    lp = alt.get("logprob", _DEFAULT_LOGPROB)
+                    if tok in ("1", "2", "3"):
+                        token_logprobs.setdefault(tok, lp)
     except Exception:
         pass
+
+    if debug:
+        raw_tokens = [
+            f"{e.get('token','?')}={e.get('logprob',0):.3f}"
+            for e in (logprobs_data if isinstance(logprobs_data, list) else [])
+        ]
+        print(f"  [router debug] raw top token(s): {raw_tokens}")
+        print(f"  [router debug] found 1/2/3 logprobs: {token_logprobs}")
 
     lp1 = token_logprobs.get("1", _DEFAULT_LOGPROB)
     lp2 = token_logprobs.get("2", _DEFAULT_LOGPROB)

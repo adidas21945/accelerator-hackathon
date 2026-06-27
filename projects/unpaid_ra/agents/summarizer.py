@@ -44,8 +44,14 @@ def run(subtask: dict, paper: dict) -> dict:
     )
     messages = [{"role": "system", "content": system}, {"role": "user", "content": user_msg}]
 
+    tokens = 0
+    text = ""
     try:
         text, tokens = chat_with_model(model, messages, json_mode=True)
+    except Exception:
+        pass
+
+    try:
         result = json.loads(text)
         for key in ("title", "contribution", "method", "limitation"):
             if key not in result:
@@ -57,7 +63,6 @@ def run(subtask: dict, paper: dict) -> dict:
             "method": "See abstract",
             "limitation": "Not extractable",
         }
-        tokens = 0
 
     elapsed = round(time.perf_counter() - t0, 2)
     actual_cost = round(tokens / 1000 * COST_PER_1K.get(model, 0.0), 6)

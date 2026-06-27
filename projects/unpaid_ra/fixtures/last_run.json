@@ -1,157 +1,154 @@
 {
   "field": "ML models for stock return prediction",
   "queries": [
-    "machine learning stock return prediction deep learning",
-    "equity return forecasting neural networks",
-    "transformer models financial time series prediction",
-    "alternative data stock market prediction ML",
-    "reinforcement learning portfolio optimization equities"
+    "stock return prediction machine learning models",
+    "time series forecasting stock returns deep learning",
+    "evaluating performance of regression models for predicting stock prices",
+    "benchmarking artificial neural networks for financial time series analysis",
+    "recent advances in recurrent neural networks for stock market prediction"
   ],
   "papers": [
     {
-      "title": "Temporal Fusion Transformers for Equity Return Forecasting: Cross-Sectional Evidence",
-      "abstract": "We present a Temporal Fusion Transformer (TFT) architecture adapted for cross-sectional stock return prediction using multi-scale time-series features. Our model integrates macroeconomic indicators, firm-level accounting signals, and high-frequency market microstructure data. On a universe of S&P 1500 constituents from 2010-2022, the TFT achieves a monthly long-short portfolio Sharpe ratio of 1.84, outperforming LSTM and GRU baselines by 23%. We find that attention weights strongly emphasize earnings surprise and price momentum at the 21-day horizon. However, performance degrades during market stress periods, suggesting the model captures regime-dependent patterns that do not generalize to tail events.",
-      "year": 2023,
+      "title": "Deep Learning for Short-Term Equity Trend Forecasting: A Behavior-Driven Multi-Factor Approach",
+      "abstract": "This study applies machine learning to short-term stock return prediction using behavioral alpha factors. MLP achieves the best performance with Sharpe ratio of 1.6075 compared to CNN at 1.1487 and SVM at 0.7709.",
+      "year": 2025,
       "authors": [
         {
-          "name": "Sarah Chen"
-        },
-        {
-          "name": "Marcus Veltri"
-        },
-        {
-          "name": "Priya Nair"
+          "name": "Wenhao Xu et al."
         }
       ],
-      "citationCount": 142,
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4312109"
+      "citationCount": 12,
+      "url": "https://arxiv.org/abs/2508.14656"
     },
     {
-      "title": "Graph Neural Networks for Factor Investing: Learning Latent Industry Structures",
-      "abstract": "We propose a Graph Neural Network (GNN) framework that jointly learns latent industry structure and stock return predictability from supply-chain relationships and co-movement correlations. Unlike pre-defined GICS classifications, our learned adjacency matrix adapts dynamically to evolving sector linkages. Applied to the Russell 2000 from 2015-2023, the GNN generates a top-quintile portfolio with annualized alpha of 8.3% over the Fama-French five-factor benchmark. Ablations confirm that learned edges outperform static industry graphs. A key limitation is computational overhead at inference: updating the adjacency matrix for 2000 stocks requires 4.2 seconds per rebalancing, which may be prohibitive for high-frequency applications.",
-      "year": 2023,
+      "title": "FactorGCL: A Hypergraph-Based Factor Model with Temporal Residual Contrastive Learning for Stock Returns Prediction",
+      "abstract": "A hypergraph-based factor model combining hypergraph neural networks with temporal residual contrastive learning to capture complex inter-stock relationships and latent factor structures for return prediction.",
+      "year": 2025,
       "authors": [
         {
-          "name": "James Park"
-        },
-        {
-          "name": "Yuki Tanaka"
-        },
-        {
-          "name": "Elena Voronova"
+          "name": "FactorGCL Authors"
         }
       ],
-      "citationCount": 98,
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4401237"
+      "citationCount": 8,
+      "url": "https://arxiv.org/list/q-fin/2025-02"
     },
     {
-      "title": "Language Models as Market Analysts: Extracting Alpha from Earnings Call Transcripts",
-      "abstract": "We fine-tune a large language model (LLM) on a curated corpus of 47,000 quarterly earnings call transcripts from 2005-2022 to predict post-earnings announcement drift. The model encodes nuanced managerial tone, hedging language, and question-answer dynamics that elude traditional sentiment dictionaries. Our LLM-based long-short portfolio generates a 5-day PEAD alpha of 1.92% per quarter with t-statistic 4.7, compared to 0.84% for FinBERT baselines. We document that the model is particularly effective for small-cap firms where analyst coverage is sparse. The primary limitation is data recency bias: the model requires fine-tuning quarterly to remain effective, adding significant operational overhead.",
-      "year": 2024,
+      "title": "Artificial Intelligence Models for Predicting Stock Returns Using Fundamental, Technical, and Entropy-Based Strategies",
+      "abstract": "Examines combining LLM semantic intelligence with traditional ML for NASDAQ-100 stock prediction over 2020-2025. Tests fundamental, technical, and entropy-based frameworks using ChatGPT-4o with ML algorithms.",
+      "year": 2025,
       "authors": [
         {
-          "name": "David Kwan"
+          "name": "Gil Cohen"
         },
         {
-          "name": "Ananya Singh"
+          "name": "Avishay Aiche"
         },
         {
-          "name": "Robert Mueller"
+          "name": "Ron Eichel"
         }
       ],
-      "citationCount": 67,
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4588942"
+      "citationCount": 15,
+      "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12191900/"
     },
     {
-      "title": "Regime-Aware Deep Reinforcement Learning for Dynamic Portfolio Allocation",
-      "abstract": "We develop a regime-aware deep reinforcement learning (DRL) agent for dynamic stock portfolio allocation that explicitly conditions policy decisions on hidden Markov model (HMM) estimated market regimes. The agent learns separate neural policy heads for bull, bear, and high-volatility regimes, switching via a Bayesian online changepoint detector. Backtesting on global equity indices from 2000-2023, the regime-aware DRL achieves a Calmar ratio of 2.1 versus 0.9 for a regime-agnostic DRL baseline. Despite strong average performance, the method suffers from regime misclassification risk: transitions between regimes induce 3-5 day lag in policy adjustment, resulting in drawdowns of up to 12% during sudden market shocks such as the COVID-19 crash.",
-      "year": 2022,
+      "title": "Multi-Horizon Echo State Network Prediction of Intraday Stock Returns",
+      "abstract": "Applies Echo State Networks to intraday stock return prediction across multiple horizons. ESNs offer computational efficiency over deep learning while capturing nonlinear temporal dependencies, showing competitive performance against LSTM and ARIMA baselines.",
+      "year": 2025,
       "authors": [
         {
-          "name": "Carlos Reyes"
-        },
-        {
-          "name": "Fatima Al-Hassan"
-        },
-        {
-          "name": "Thomas Bergmann"
+          "name": "ESN Finance Authors"
         }
       ],
-      "citationCount": 211,
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4098321"
+      "citationCount": 6,
+      "url": "https://arxiv.org/abs/2504.19623"
     },
     {
-      "title": "Alternative Data Integration in ML-Based Return Prediction: Satellite Imagery and Web Traffic",
-      "abstract": "This paper systematically evaluates the incremental return predictability from two alternative data sources \u2014 retail foot traffic derived from satellite imagery and corporate website visitor counts \u2014 when combined with conventional price-volume features in gradient-boosted tree models. We construct a monthly rebalanced portfolio of 500 US retail and e-commerce stocks from 2017-2023. Models augmented with alternative data achieve an out-of-sample IC of 0.067 versus 0.043 for the price-volume baseline, a 56% improvement. Foot traffic data contributes disproportionately for brick-and-mortar retailers, while web traffic is more predictive for pure-play e-commerce. The main limitation is data cost and survivorship: alternative data providers curate survivorship-biased panels that may overstate predictive power for live trading.",
-      "year": 2024,
+      "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+      "abstract": "A bipartite graph neural network framework modeling cross-market dependencies between U.S. and Chinese equity markets. Captures asymmetric information flows and outperforms single-market baselines using cross-market alpha signals.",
+      "year": 2025,
       "authors": [
         {
-          "name": "Linh Nguyen"
-        },
-        {
-          "name": "Amir Reza Hosseini"
-        },
-        {
-          "name": "Sophie Marchetti"
+          "name": "Cross-Market GNN Authors"
         }
       ],
-      "citationCount": 53,
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4677815"
+      "citationCount": 9,
+      "url": "https://arxiv.org/abs/2603.10559"
     }
   ],
   "summaries": [
     {
-      "title": "Temporal Fusion Transformers for Equity Return Forecasting: Cross-Sectional Evidence",
-      "contribution": "We present a Temporal Fusion Transformer (TFT) architecture adapted for cross-sectional stock return prediction using multi-scale time-series features. Our model integrates macroeconomic indicators, f",
-      "method": "See abstract",
-      "limitation": "Not extractable"
+      "title": "Deep Learning for Short-Term Equity Trend Forecasting: A Behavior-Driven Multi-Factor Approach",
+      "contribution": "This study applies machine learning to short-term stock return prediction using behavioral alpha factors, achieving the best performance with a Sharpe ratio of 1.6075.",
+      "method": "The approach uses multi-factor models incorporating behavioral alpha factors and trains them using deep learning techniques such as MLP (Multi-Layer Perceptron), CNN (Convolutional Neural Network), and SVM (Support Vector Machine).",
+      "limitation": "Not stated in abstract"
     },
     {
-      "title": "Graph Neural Networks for Factor Investing: Learning Latent Industry Structures",
-      "contribution": "We propose a Graph Neural Network (GNN) framework that jointly learns latent industry structure and stock return predictability from supply-chain relationships and co-movement correlations. Unlike pre",
-      "method": "See abstract",
-      "limitation": "Not extractable"
+      "title": "FactorGCL: A Hypergraph-Based Factor Model with Temporal Residual Contrastive Learning for Stock Returns Prediction",
+      "contribution": "A hypergraph-based factor model combining hypergraph neural networks with temporal residual contrastive learning to capture complex inter-stock relationships and latent factor structures for return prediction.",
+      "method": "The method combines hypergraph neural networks with temporal residual contrastive learning to capture complex inter-stock relationships and latent factor structures for stock returns prediction.",
+      "limitation": "Not stated in abstract"
     },
     {
-      "title": "Language Models as Market Analysts: Extracting Alpha from Earnings Call Transcripts",
-      "contribution": "We fine-tune a large language model (LLM) on a curated corpus of 47,000 quarterly earnings call transcripts from 2005-2022 to predict post-earnings announcement drift. The model encodes nuanced manage",
-      "method": "See abstract",
-      "limitation": "Not extractable"
+      "title": "Artificial Intelligence Models for Predicting Stock Returns Using Fundamental, Technical, and Entropy-Based Strategies",
+      "contribution": "Examines combining LLM semantic intelligence with traditional ML for NASDAQ-100 stock prediction over 2020-2025 using fundamental, technical, and entropy-based frameworks.",
+      "method": "Tests fundamental, technical, and entropy-based strategies using ChatGPT-4o with machine learning algorithms",
+      "limitation": "Not stated in abstract"
     },
     {
-      "title": "Regime-Aware Deep Reinforcement Learning for Dynamic Portfolio Allocation",
-      "contribution": "We develop a regime-aware deep reinforcement learning (DRL) agent for dynamic stock portfolio allocation that explicitly conditions policy decisions on hidden Markov model (HMM) estimated market regim",
-      "method": "See abstract",
-      "limitation": "Not extractable"
+      "title": "Multi-Horizon Echo State Network Prediction of Intraday Stock Returns",
+      "contribution": "Applies Echo State Networks to intraday stock return prediction across multiple horizons, showing competitive performance against LSTM and ARIMA baselines.",
+      "method": "Echo State Networks (ESNs) are applied to predict intraday stock returns across multiple horizons. ESNs offer computational efficiency over deep learning methods like LSTMs while capturing nonlinear temporal dependencies in the data.",
+      "limitation": "The limitation is not explicitly stated in the abstract."
     },
     {
-      "title": "Alternative Data Integration in ML-Based Return Prediction: Satellite Imagery and Web Traffic",
-      "contribution": "This paper systematically evaluates the incremental return predictability from two alternative data sources \u2014 retail foot traffic derived from satellite imagery and corporate website visitor counts \u2014 ",
-      "method": "See abstract",
-      "limitation": "Not extractable"
+      "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+      "contribution": "Developed a bipartite graph neural network framework that models cross-market dependencies between the U.S. and Chinese equity markets, capturing asymmetric information flows and generating superior outperformance using cross-market alpha signals compared to single-market baselines.",
+      "method": "Proposed a bipartite graph neural network architecture specifically designed for modeling cross-market relationships between the U.S. and Chinese equity markets, allowing for the capture of asymmetric information flows and enabling the generation of cross-market alpha signals.",
+      "limitation": "Not stated in abstract"
     }
   ],
   "synthesis": {
     "themes": [
-      "ML approaches dominate recent literature [cite: Temporal Fusion Transformers for Equity Return Forecasting: Cross-Sectional Evidence]"
+      "Use of machine learning for short-term stock return prediction [cite: Deep Learning for Short-Term Equity Trend Forecasting: A Behavior-Driven Multi-Factor Approach]",
+      "Integration of behavioral alpha factors in predictive models [cite: Deep Learning for Short-Term Equity Trend Forecasting: A Behavior-Driven Multi-Factor Approach]",
+      "Application of hypergraph neural networks to capture complex inter-stock relationships [cite: FactorGCL: A Hypergraph-Based Factor Model with Temporal Residual Contrastive Learning for Stock Returns Prediction]"
     ],
     "contradictions": [
-      "Papers disagree on model generalizability under regime shifts [cite: Temporal Fusion Transformers for Equity Return Forecasting: Cross-Sectional Evidence]"
+      "Deep Learning for Short-Term Equity Trend Forecasting vs FactorGCL: The former uses traditional deep learning models like MLP, CNN, and SVM with behavioral alpha factors, while the latter employs hypergraph neural networks with temporal residual contrastive learning [vs] FactorGCL: A Hypergraph-Based Factor Model with Temporal Residual Contrastive Learning for Stock Returns Prediction"
     ],
     "open_questions": [
-      "How do models generalize to unseen market regimes? (gap relative to Temporal Fusion Transformers for Equity Return Forecasting: Cross-Sectional Evidence)",
-      "Can Temporal Fusion Transformers for Equity Return Forecasting: Cross-Sectional Evidence-style approaches generalize beyond the training distribution?"
+      "How can the integration of semantic intelligence from LLMs like ChatGPT-4o improve predictive performance in stock return models beyond traditional ML approaches [cite: Artificial Intelligence Models for Predicting Stock Returns Using Fundamental, Technical, and Entropy-Based Strategies]",
+      "What are the limitations of Echo State Networks compared to other recurrent neural network architectures like LSTM when applied to intraday stock prediction [cite: Multi-Horizon Echo State Network Prediction of Intraday Stock Returns]",
+      "How can bipartite graph neural networks be extended or combined with other models (e.g., hypergraph-based approaches) to further enhance cross-market return forecasting [cite: A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting]"
     ]
   },
   "ideas": [
     {
-      "direction": "Cross-regime generalization in ML stock prediction",
+      "direction": "Integrating LLM Semantic Intelligence into Stock Return Models",
       "experiments": [
-        "Train on pre-2020 data, evaluate on COVID and post-COVID regimes separately",
-        "Implement regime-conditioned loss functions and compare to standard cross-entropy",
-        "Ablation study: vary training window length from 1 to 10 years"
+        "Develop a stock return model that incorporates semantic understanding from an LLM like ChatGPT-4o to process news articles and social media posts, generating textual features for predictive modeling.",
+        "Compare the performance of models using traditional ML features (e.g., technical indicators) with those augmented by LLM-generated sentiment scores on intraday predictions.",
+        "Evaluate whether semantic insights capture market inefficiencies that are not reflected in quantitative alpha factors used in behavioral factor models."
       ],
-      "novelty_rationale": "Addresses gap: 'How do models generalize to unseen market regimes? (gap relative to Temporal Fus'. No prior work systematically benchmarks regime transfer."
+      "novelty_rationale": "Addresses gap: 'How can the integration of semantic intelligence from LLMs like ChatGPT-4o impro'. This direction addresses the open question of how semantic intelligence from LLMs can improve predictive performance beyond traditional ML approaches, leveraging gaps identified in the literature about integrating advanced AI capabilities into financial modeling."
+    },
+    {
+      "direction": "Hybrid Hypergraph-LLM Models for Cross-Market Return Forecasting",
+      "experiments": [
+        "Design a hybrid model that combines hypergraph neural networks with LLM-generated textual features to predict cross-market returns (e.g., U.S.-China markets).",
+        "Investigate the impact of integrating semantic insights from LLMs into hypergraph-based models on forecasting accuracy for multi-asset portfolios.",
+        "Compare the performance of traditional hypergraph models against those enhanced by LLM-derived features in predicting inter-market relationships during periods of high volatility."
+      ],
+      "novelty_rationale": "Addresses gap: 'How can the integration of semantic intelligence from LLMs like ChatGPT-4o impro'. This direction explores how the integration of semantic intelligence from LLMs can enhance existing hypergraph-based approaches, addressing gaps highlighted in the literature about extending graph neural networks to capture more nuanced market interactions and cross-market dynamics."
+    },
+    {
+      "direction": "LLM-Augmented Echo State Networks for Intraday Stock Prediction",
+      "experiments": [
+        "Modify an Echo State Network (ESN) architecture by incorporating LLM-generated textual features derived from news feeds and social media to improve intraday stock return predictions.",
+        "Evaluate the effectiveness of combining ESN with semantic insights in capturing market sentiment shifts that traditional ESN models may miss.",
+        "Compare the forecasting performance of enhanced ESN models against standard LSTM networks on high-frequency trading datasets."
+      ],
+      "novelty_rationale": "Addresses gap: 'How can the integration of semantic intelligence from LLMs like ChatGPT-4o impro'. This direction tackles the open question regarding the limitations of ESNs compared to other RNN architectures, proposing a novel approach to augment ESNs with semantic intelligence from LLMs to potentially overcome identified shortcomings in capturing temporal dynamics and market sentiment."
     }
   ]
 }

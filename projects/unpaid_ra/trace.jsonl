@@ -1,49 +1,50 @@
-{"type": "agent_start", "ts": 1782578773.391567, "agent": "planner", "field": "ML models for stock return prediction"}
-{"type": "probe_start", "ts": 1782578773.3917499, "agent": "query_expansion", "model": "granite4:micro", "probe_tokens": 50}
-{"type": "probe_result", "ts": 1782578773.56962, "agent": "query_expansion", "confidence_scores": {"tier1": 0.0, "tier2": 1.0, "tier3": 0.0}}
-{"type": "routing_decision", "ts": 1782578773.569835, "agent": "query_expansion", "tier": "tier2", "assigned_model": "claude-haiku-4-5", "confidence_scores": {"tier1": 0.0, "tier2": 1.0, "tier3": 0.0}, "thresholds": {"tier1": 0.5, "tier2": 0.65, "tier3": 0.0}, "signal": "logprob_softmax"}
-{"type": "subtask_defined", "ts": 1782578773.570168, "name": "query_expansion", "assigned_model": "claude-haiku-4-5"}
-{"type": "subtask_defined", "ts": 1782578773.5702348, "name": "paper_fetch", "assigned_model": "mcp/fetch_papers"}
-{"type": "probe_start", "ts": 1782578773.5702899, "agent": "summarization", "model": "granite4:micro", "probe_tokens": 50}
-{"type": "probe_result", "ts": 1782578773.714973, "agent": "summarization", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}}
-{"type": "routing_decision", "ts": 1782578773.715179, "agent": "summarization", "tier": "tier3", "assigned_model": "claude-sonnet-4-6", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}, "thresholds": {"tier1": 0.5, "tier2": 0.65, "tier3": 0.0}, "signal": "logprob_softmax"}
-{"type": "subtask_defined", "ts": 1782578773.715542, "name": "summarization", "assigned_model": "claude-sonnet-4-6"}
-{"type": "probe_start", "ts": 1782578773.7156181, "agent": "gap_synthesis", "model": "granite4:micro", "probe_tokens": 50}
-{"type": "probe_result", "ts": 1782578773.859679, "agent": "gap_synthesis", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}}
-{"type": "routing_decision", "ts": 1782578773.859848, "agent": "gap_synthesis", "tier": "tier3", "assigned_model": "claude-sonnet-4-6", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}, "thresholds": {"tier1": 0.5, "tier2": 0.65, "tier3": 0.0}, "signal": "logprob_softmax"}
-{"type": "subtask_defined", "ts": 1782578773.86023, "name": "gap_synthesis", "assigned_model": "claude-sonnet-4-6"}
-{"type": "probe_start", "ts": 1782578773.860321, "agent": "idea_generation", "model": "granite4:micro", "probe_tokens": 50}
-{"type": "probe_result", "ts": 1782578774.000036, "agent": "idea_generation", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}}
-{"type": "routing_decision", "ts": 1782578774.000215, "agent": "idea_generation", "tier": "tier3", "assigned_model": "claude-sonnet-4-6", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}, "thresholds": {"tier1": 0.5, "tier2": 0.65, "tier3": 0.0}, "signal": "logprob_softmax"}
-{"type": "subtask_defined", "ts": 1782578774.0005162, "name": "idea_generation", "assigned_model": "claude-sonnet-4-6"}
-{"type": "agent_complete", "ts": 1782578774.000557, "agent": "planner", "subtasks": ["query_expansion", "paper_fetch", "summarization", "gap_synthesis", "idea_generation"]}
-{"type": "wave_start", "ts": 1782578774.001021, "wave": 1, "agents": ["query_expander"]}
-{"type": "agent_start", "ts": 1782578774.004972, "agent": "query_expander", "model": "claude-haiku-4-5", "field": "ML models for stock return prediction"}
-{"type": "agent_complete", "ts": 1782578774.005055, "agent": "query_expander", "model": "claude-haiku-4-5", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
-{"type": "wave_complete", "ts": 1782578774.005193, "wave": 1, "agents": ["query_expander"]}
-{"type": "wave_start", "ts": 1782578774.0052621, "wave": 2, "agents": ["paper_fetcher"]}
-{"type": "agent_start", "ts": 1782578774.005395, "agent": "paper_fetcher", "model": "mcp/fetch_papers", "query": "machine learning stock return prediction deep learning"}
-{"type": "fetch_attempt", "ts": 1782578774.005534, "query": "machine learning stock return prediction deep learning"}
-{"type": "papers_retrieved", "ts": 1782578774.005822, "count": 5, "tokens": 0, "cost": 0.0, "source": "fixture"}
-{"type": "agent_complete", "ts": 1782578774.0059588, "agent": "paper_fetcher", "model": "mcp/fetch_papers", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
-{"type": "wave_complete", "ts": 1782578774.0061572, "wave": 2, "agents": ["paper_fetcher"]}
-{"type": "wave_start", "ts": 1782578774.0062249, "wave": 3, "agents": ["summarizer", "summarizer", "summarizer", "summarizer", "summarizer"]}
-{"type": "agent_start", "ts": 1782578774.006507, "agent": "summarizer", "model": "claude-sonnet-4-6", "paper_title": "Temporal Fusion Transformers for Equity Return Forecasting: Cross-Sectional Evidence"}
-{"type": "agent_start", "ts": 1782578774.006548, "agent": "summarizer", "model": "claude-sonnet-4-6", "paper_title": "Graph Neural Networks for Factor Investing: Learning Latent Industry Structures"}
-{"type": "agent_start", "ts": 1782578774.0066712, "agent": "summarizer", "model": "claude-sonnet-4-6", "paper_title": "Language Models as Market Analysts: Extracting Alpha from Earnings Call Transcripts"}
-{"type": "agent_start", "ts": 1782578774.006918, "agent": "summarizer", "model": "claude-sonnet-4-6", "paper_title": "Regime-Aware Deep Reinforcement Learning for Dynamic Portfolio Allocation"}
-{"type": "agent_start", "ts": 1782578774.008227, "agent": "summarizer", "model": "claude-sonnet-4-6", "paper_title": "Alternative Data Integration in ML-Based Return Prediction: Satellite Imagery and Web Traffic"}
-{"type": "agent_complete", "ts": 1782578774.008045, "agent": "summarizer", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
-{"type": "agent_complete", "ts": 1782578774.009272, "agent": "summarizer", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
-{"type": "agent_complete", "ts": 1782578774.009807, "agent": "summarizer", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
-{"type": "agent_complete", "ts": 1782578774.010209, "agent": "summarizer", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
-{"type": "agent_complete", "ts": 1782578774.010855, "agent": "summarizer", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
-{"type": "wave_complete", "ts": 1782578774.011163, "wave": 3, "agents": ["summarizer", "summarizer", "summarizer", "summarizer", "summarizer"]}
-{"type": "wave_start", "ts": 1782578774.0112078, "wave": 4, "agents": ["gap_synthesizer"]}
-{"type": "agent_start", "ts": 1782578774.0112698, "agent": "gap_synthesizer", "model": "claude-sonnet-4-6", "paper_count": 5}
-{"type": "agent_complete", "ts": 1782578774.011609, "agent": "gap_synthesizer", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
-{"type": "wave_complete", "ts": 1782578774.0117629, "wave": 4, "agents": ["gap_synthesizer"]}
-{"type": "wave_start", "ts": 1782578774.011868, "wave": 5, "agents": ["idea_generator"]}
-{"type": "agent_start", "ts": 1782578774.011976, "agent": "idea_generator", "model": "claude-sonnet-4-6"}
-{"type": "agent_complete", "ts": 1782578774.0124218, "agent": "idea_generator", "model": "claude-sonnet-4-6", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
-{"type": "wave_complete", "ts": 1782578774.0125482, "wave": 5, "agents": ["idea_generator"]}
+{"type": "agent_start", "ts": 1782585412.289409, "agent": "planner", "field": "ML models for stock return prediction"}
+{"type": "probe_start", "ts": 1782585412.289531, "agent": "query_expansion", "model": "granite4:micro", "probe_tokens": 50}
+{"type": "probe_result", "ts": 1782585412.507638, "agent": "query_expansion", "confidence_scores": {"tier1": 0.969, "tier2": 0.0, "tier3": 0.031}}
+{"type": "routing_decision", "ts": 1782585412.507788, "agent": "query_expansion", "tier": "tier1", "assigned_model": "granite4:micro", "confidence_scores": {"tier1": 0.969, "tier2": 0.0, "tier3": 0.031}, "thresholds": {"tier1": 0.5, "tier2": 0.1, "tier3": 0.0}, "signal": "logprob_softmax"}
+{"type": "subtask_defined", "ts": 1782585412.507841, "name": "query_expansion", "assigned_model": "granite4:micro"}
+{"type": "subtask_defined", "ts": 1782585412.5078862, "name": "paper_fetch", "assigned_model": "mcp/fetch_papers"}
+{"type": "probe_start", "ts": 1782585412.507924, "agent": "summarization", "model": "granite4:micro", "probe_tokens": 50}
+{"type": "probe_result", "ts": 1782585412.652682, "agent": "summarization", "confidence_scores": {"tier1": 0.288, "tier2": 0.141, "tier3": 0.571}}
+{"type": "routing_decision", "ts": 1782585412.652837, "agent": "summarization", "tier": "tier2", "assigned_model": "claude-haiku-4-5", "confidence_scores": {"tier1": 0.288, "tier2": 0.141, "tier3": 0.571}, "thresholds": {"tier1": 0.5, "tier2": 0.1, "tier3": 0.0}, "signal": "logprob_softmax"}
+{"type": "subtask_defined", "ts": 1782585412.652891, "name": "summarization", "assigned_model": "claude-haiku-4-5"}
+{"type": "probe_start", "ts": 1782585412.652931, "agent": "gap_synthesis", "model": "granite4:micro", "probe_tokens": 50}
+{"type": "probe_result", "ts": 1782585412.792, "agent": "gap_synthesis", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}}
+{"type": "routing_decision", "ts": 1782585412.792147, "agent": "gap_synthesis", "tier": "tier3", "assigned_model": "claude-sonnet-4-6", "confidence_scores": {"tier1": 0.0, "tier2": 0.0, "tier3": 1.0}, "thresholds": {"tier1": 0.5, "tier2": 0.1, "tier3": 0.0}, "signal": "logprob_softmax"}
+{"type": "subtask_defined", "ts": 1782585412.792408, "name": "gap_synthesis", "assigned_model": "claude-sonnet-4-6"}
+{"type": "probe_start", "ts": 1782585412.7924411, "agent": "idea_generation", "model": "granite4:micro", "probe_tokens": 50}
+{"type": "probe_result", "ts": 1782585412.9302678, "agent": "idea_generation", "confidence_scores": {"tier1": 0.001, "tier2": 0.0, "tier3": 0.999}}
+{"type": "routing_decision", "ts": 1782585412.930668, "agent": "idea_generation", "tier": "tier3", "assigned_model": "claude-sonnet-4-6", "confidence_scores": {"tier1": 0.001, "tier2": 0.0, "tier3": 0.999}, "thresholds": {"tier1": 0.5, "tier2": 0.1, "tier3": 0.0}, "signal": "logprob_softmax"}
+{"type": "subtask_defined", "ts": 1782585412.931008, "name": "idea_generation", "assigned_model": "claude-sonnet-4-6"}
+{"type": "agent_complete", "ts": 1782585412.931167, "agent": "planner", "subtasks": ["query_expansion", "paper_fetch", "summarization", "gap_synthesis", "idea_generation"]}
+{"type": "wave_start", "ts": 1782585412.932273, "wave": 1, "agents": ["query_expander"]}
+{"type": "agent_start", "ts": 1782585412.939852, "agent": "query_expander", "model": "granite4:micro", "field": "ML models for stock return prediction"}
+{"type": "agent_complete", "ts": 1782585413.996908, "agent": "query_expander", "model": "granite4:micro", "tokens": 151, "actual_cost": 0.0, "sonnet_cost": 0.000453, "latency": 1.06}
+{"type": "wave_complete", "ts": 1782585413.997559, "wave": 1, "agents": ["query_expander"]}
+{"type": "wave_start", "ts": 1782585413.997677, "wave": 2, "agents": ["paper_fetcher"]}
+{"type": "agent_start", "ts": 1782585413.99787, "agent": "paper_fetcher", "model": "mcp/fetch_papers", "query": "stock return prediction machine learning models"}
+{"type": "fetch_attempt", "ts": 1782585413.997948, "query": "stock return prediction machine learning models"}
+{"type": "papers_retrieved", "ts": 1782585413.998291, "count": 5, "tokens": 0, "cost": 0.0, "source": "fallback"}
+{"type": "agent_complete", "ts": 1782585413.998357, "agent": "paper_fetcher", "model": "mcp/fetch_papers", "tokens": 0, "actual_cost": 0.0, "sonnet_cost": 0.0, "latency": 0.0}
+{"type": "wave_complete", "ts": 1782585413.998438, "wave": 2, "agents": ["paper_fetcher"]}
+{"type": "wave_start", "ts": 1782585413.998476, "wave": 3, "agents": ["summarizer", "summarizer", "summarizer", "summarizer", "summarizer"]}
+{"type": "agent_start", "ts": 1782585413.9988742, "agent": "summarizer", "model": "claude-haiku-4-5", "paper_title": "Deep Learning for Short-Term Equity Trend Forecasting: A Behavior-Driven Multi-Factor Approach"}
+{"type": "agent_start", "ts": 1782585413.998859, "agent": "summarizer", "model": "claude-haiku-4-5", "paper_title": "FactorGCL: A Hypergraph-Based Factor Model with Temporal Residual Contrastive Learning for Stock Returns Prediction"}
+{"type": "agent_start", "ts": 1782585413.9993348, "agent": "summarizer", "model": "claude-haiku-4-5", "paper_title": "Multi-Horizon Echo State Network Prediction of Intraday Stock Returns"}
+{"type": "agent_start", "ts": 1782585413.999085, "agent": "summarizer", "model": "claude-haiku-4-5", "paper_title": "Artificial Intelligence Models for Predicting Stock Returns Using Fundamental, Technical, and Entropy-Based Strategies"}
+{"type": "agent_start", "ts": 1782585413.9995031, "agent": "summarizer", "model": "claude-haiku-4-5", "paper_title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting"}
+{"type": "agent_complete", "ts": 1782585416.0029, "agent": "summarizer", "model": "claude-haiku-4-5", "tokens": 580, "actual_cost": 0.000464, "sonnet_cost": 0.00174, "latency": 2.0}
+{"type": "agent_complete", "ts": 1782585417.935592, "agent": "summarizer", "model": "claude-haiku-4-5", "tokens": 582, "actual_cost": 0.000466, "sonnet_cost": 0.001746, "latency": 3.94}
+{"type": "agent_complete", "ts": 1782585419.43714, "agent": "summarizer", "model": "claude-haiku-4-5", "tokens": 554, "actual_cost": 0.000443, "sonnet_cost": 0.001662, "latency": 5.44}
+{"type": "agent_complete", "ts": 1782585421.125324, "agent": "summarizer", "model": "claude-haiku-4-5", "tokens": 561, "actual_cost": 0.000449, "sonnet_cost": 0.001683, "latency": 7.13}
+{"type": "agent_complete", "ts": 1782585422.7166421, "agent": "summarizer", "model": "claude-haiku-4-5", "tokens": 551, "actual_cost": 0.000441, "sonnet_cost": 0.001653, "latency": 8.72}
+{"type": "wave_complete", "ts": 1782585422.717675, "wave": 3, "agents": ["summarizer", "summarizer", "summarizer", "summarizer", "summarizer"]}
+{"type": "wave_start", "ts": 1782585422.718068, "wave": 4, "agents": ["gap_synthesizer"]}
+{"type": "agent_start", "ts": 1782585422.718455, "agent": "gap_synthesizer", "model": "claude-sonnet-4-6", "paper_count": 5}
+{"type": "agent_complete", "ts": 1782585428.211156, "agent": "gap_synthesizer", "model": "claude-sonnet-4-6", "tokens": 1342, "actual_cost": 0.004026, "sonnet_cost": 0.004026, "latency": 5.49}
+{"type": "wave_complete", "ts": 1782585428.2121851, "wave": 4, "agents": ["gap_synthesizer"]}
+{"type": "wave_start", "ts": 1782585428.212568, "wave": 5, "agents": ["idea_generator"]}
+{"type": "agent_start", "ts": 1782585428.21293, "agent": "idea_generator", "model": "claude-sonnet-4-6"}
+{"type": "agent_complete", "ts": 1782585435.788686, "agent": "idea_generator", "model": "claude-sonnet-4-6", "tokens": 1442, "actual_cost": 0.004326, "sonnet_cost": 0.004326, "latency": 7.58}
+{"type": "wave_complete", "ts": 1782585435.789496, "wave": 5, "agents": ["idea_generator"]}
+{"type": "run_complete", "ts": 1782585435.7937, "field": "ML models for stock return prediction", "total_tokens": 5763, "actual_cost": 0.010615, "sonnet_cost": 0.017289, "savings_pct": 0.386, "ideas": [{"direction": "Integrating LLM Semantic Intelligence into Stock Return Models", "experiments": ["Develop a stock return model that incorporates semantic understanding from an LLM like ChatGPT-4o to process news articles and social media posts, generating textual features for predictive modeling.", "Compare the performance of models using traditional ML features (e.g., technical indicators) with those augmented by LLM-generated sentiment scores on intraday predictions.", "Evaluate whether semantic insights capture market inefficiencies that are not reflected in quantitative alpha factors used in behavioral factor models."], "novelty_rationale": "Addresses gap: 'How can the integration of semantic intelligence from LLMs like ChatGPT-4o impro'. This direction addresses the open question of how semantic intelligence from LLMs can improve predictive performance beyond traditional ML approaches, leveraging gaps identified in the literature about integrating advanced AI capabilities into financial modeling."}, {"direction": "Hybrid Hypergraph-LLM Models for Cross-Market Return Forecasting", "experiments": ["Design a hybrid model that combines hypergraph neural networks with LLM-generated textual features to predict cross-market returns (e.g., U.S.-China markets).", "Investigate the impact of integrating semantic insights from LLMs into hypergraph-based models on forecasting accuracy for multi-asset portfolios.", "Compare the performance of traditional hypergraph models against those enhanced by LLM-derived features in predicting inter-market relationships during periods of high volatility."], "novelty_rationale": "Addresses gap: 'How can the integration of semantic intelligence from LLMs like ChatGPT-4o impro'. This direction explores how the integration of semantic intelligence from LLMs can enhance existing hypergraph-based approaches, addressing gaps highlighted in the literature about extending graph neural networks to capture more nuanced market interactions and cross-market dynamics."}, {"direction": "LLM-Augmented Echo State Networks for Intraday Stock Prediction", "experiments": ["Modify an Echo State Network (ESN) architecture by incorporating LLM-generated textual features derived from news feeds and social media to improve intraday stock return predictions.", "Evaluate the effectiveness of combining ESN with semantic insights in capturing market sentiment shifts that traditional ESN models may miss.", "Compare the forecasting performance of enhanced ESN models against standard LSTM networks on high-frequency trading datasets."], "novelty_rationale": "Addresses gap: 'How can the integration of semantic intelligence from LLMs like ChatGPT-4o impro'. This direction tackles the open question regarding the limitations of ESNs compared to other RNN architectures, proposing a novel approach to augment ESNs with semantic intelligence from LLMs to potentially overcome identified shortcomings in capturing temporal dynamics and market sentiment."}], "eval_score": "3/3", "duration": 23.82}

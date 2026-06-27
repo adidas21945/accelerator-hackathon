@@ -15,24 +15,23 @@ _FIXTURE = Path(__file__).parent.parent / "fixtures" / "papers.json"
 _MCP_SCRIPT = Path(__file__).parent.parent.parent.parent / "mcp" / "semantic_scholar.py"
 
 
-def _fetch_via_mcp(query: str, limit: int = 5) -> tuple[list[dict], str]:
-    """Try to import and call semantic_scholar directly; falls back to fixture."""
+def _load_fixture() -> list[dict]:
+    return json.loads(_FIXTURE.read_text(encoding="utf-8"))
+
+
+def _fetch_papers(query: str, limit: int = 5) -> tuple[list[dict], str]:
+    """Fetch live papers; fall back to fixture when offline or on any failure."""
     if os.getenv("AGENT_OFFLINE"):
-        return _load_fixture(), "fixture"
+        return _load_fixture(), "fallback"
     try:
         import importlib.util
         spec = importlib.util.spec_from_file_location("semantic_scholar", str(_MCP_SCRIPT))
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        papers = mod.fetch_papers(query, limit)
-        source = "mcp" if papers else "fixture"
-        return papers or _load_fixture(), source
+        papers, source = mod.fetch_papers_impl(query, limit)
+        return papers, source
     except Exception:
-        return _load_fixture(), "fixture"
-
-
-def _load_fixture() -> list[dict]:
-    return json.loads(_FIXTURE.read_text(encoding="utf-8"))
+        return _load_fixture(), "fallback"
 
 
 def run(subtask: dict, queries: list[str] | None = None) -> list[dict]:
@@ -41,7 +40,7 @@ def run(subtask: dict, queries: list[str] | None = None) -> list[dict]:
     emit("agent_start", agent="paper_fetcher", model="mcp/fetch_papers", query=query)
     emit("fetch_attempt", query=query)
 
-    papers, source = _fetch_via_mcp(query)
+    papers, source = _fetch_papers(query)
     papers = papers[:5]
 
     elapsed = round(time.perf_counter() - t0, 2)
